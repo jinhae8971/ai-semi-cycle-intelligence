@@ -253,9 +253,8 @@ EVENTS = [
 ]
 
 
-def evaluate_event(scores: pd.DataFrame, event: dict) -> dict:
+def evaluate_event(scores: pd.DataFrame, event: dict, sox: pd.DataFrame) -> dict:
     target_date = pd.Timestamp(event["date"], tz="UTC")
-    # Find nearest available date in scores
     nearest_idx = scores.index.get_indexer([target_date], method="nearest")[0]
     if nearest_idx < 0 or nearest_idx >= len(scores):
         return {**event, "actual_score": None, "actual_phase": None, "match": "no_data"}
@@ -279,6 +278,31 @@ def evaluate_event(scores: pd.DataFrame, event: dict) -> dict:
             lo, hi = map(float, expected.split("-"))
             match = "✅" if (lo - TOL) <= actual_score <= (hi + TOL) else "❌"
 
+    # Get SOX price at event + forward returns
+    sox_at_event = float(sox["Close"].asof(actual_ts)) if actual_ts in sox.index or actual_ts <= sox.index.max() else None
+    forward_returns = {}
+    if sox_at_event:
+        for days_label, days in [("1m", 21), ("3m", 63), ("6m", 126), ("12m", 252)]:
+            future_idx = nearest_idx_at = sox.index.get_indexer([actual_ts + pd.Timedelta(days=days * 1.5)],
+                                                                  method="nearest")[0]
+            if future_idx > 0 and future_idx < len(sox):
+                future_ts = sox.index[future_idx]
+                if future_ts > actual_ts:
+                    future_price = float(sox["Close"].iloc[future_idx])
+                    forward_returns[days_label] = (future_price / sox_at_event - 1) * 100
+
+    # Compute "did the score work?" — for capitulation we expect positive returns,
+    # for euphoria we expect negative returns
+    score_signal_correct = None
+    if actual_score is not None and forward_returns.get("3m") is not None:
+        ret_3m = forward_returns["3m"]
+        if actual_score < 30:
+            # Bottom signal — should rally
+            score_signal_correct = ret_3m > 5
+        elif actual_score > 70:
+            # Top signal — should weaken
+            score_signal_correct = ret_3m < 5
+
     return {
         "name":           event["name"],
         "target_date":    event["date"],
@@ -289,6 +313,9 @@ def evaluate_event(scores: pd.DataFrame, event: dict) -> dict:
         "actual_phase":   actual_phase,
         "match":          match,
         "context":        event["context"],
+        "sox_price":      round(sox_at_event, 0) if sox_at_event else None,
+        "forward_returns": {k: round(v, 1) for k, v in forward_returns.items()},
+        "signal_correct": score_signal_correct,
     }
 
 
@@ -415,7 +442,7 @@ def main():
     print(f"  ASCS std:   {valid_scores['ascs'].std():.1f}")
 
     print("\n🔍 Evaluating against historical events...")
-    event_results = [evaluate_event(scores, e) for e in EVENTS]
+    event_results = [evaluate_event(scores, e, sox) for e in EVENTS]
     print_event_table(event_results)
 
     # Phase distribution
@@ -429,6 +456,18 @@ def main():
     print("\n💾 Saving results...")
 
     # JSON output
+    # Also include a downsampled timeseries (weekly) for dashboard charting
+    weekly_scores = valid_scores.resample("W").last().dropna(subset=["ascs"])
+    weekly_sox = sox["Close"].resample("W").last().reindex(weekly_scores.index, method="ffill")
+
+    timeseries = []
+    for ts in weekly_scores.index:
+        timeseries.append({
+            "ts": ts.strftime("%Y-%m-%d"),
+            "ascs": round(float(weekly_scores.loc[ts, "ascs"]), 1),
+            "sox":  round(float(weekly_sox.loc[ts]), 0) if pd.notna(weekly_sox.loc[ts]) else None,
+        })
+
     json_out = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "backtest_window": {
@@ -447,6 +486,7 @@ def main():
         },
         "phase_distribution_pct": {p: float(phase_counts.get(p, 0))
                                     for p in ["Capitulation", "Recovery", "Expansion", "Late Bull", "Euphoria"]},
+        "timeseries_weekly": timeseries,  # ~480 weekly points = ~30KB
     }
     out_json = output_dir / "backtest_results.json"
     out_json.write_text(json.dumps(json_out, indent=2, default=str), encoding="utf-8")

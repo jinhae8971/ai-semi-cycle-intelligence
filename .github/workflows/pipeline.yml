@@ -56,6 +56,11 @@ jobs:
           TZ: "Asia/Seoul"
         run: python scripts/run_pipeline.py
 
+      - name: Refresh historical backtest (daily only)
+        if: github.event.schedule == '0 22 * * *' || github.event_name == 'workflow_dispatch'
+        run: python scripts/backtest.py
+        continue-on-error: true   # backtest failure shouldn't block deployment
+
       - name: Commit JSON artifacts
         run: |
           git config user.name  "asci-bot[bot]"

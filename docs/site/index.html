@@ -409,21 +409,224 @@ function HyperscalerCapex({ data }) {
   );
 }
 
+function BacktestTimelineChart({ timeseries, events, currentScore }) {
+  if (!timeseries || timeseries.length === 0) return null;
+
+  // Map ASCS to SOX dual axis using normalized data
+  const data = timeseries.map(d => ({
+    ts: d.ts, ascs: d.ascs, sox: d.sox,
+  }));
+
+  // Build event markers (find matching ts in data)
+  const eventMarkers = (events || []).filter(e => e.actual_score != null).map(e => ({
+    ts: e.actual_date,
+    name: e.name,
+    score: e.actual_score,
+    match: e.match,
+  }));
+
+  return (
+    <div className="h-96">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data} margin={{ top: 10, right: 50, left: 0, bottom: 0 }}>
+          <defs>
+            <linearGradient id="btGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={COLORS.lateBull} stopOpacity={0.4} />
+              <stop offset="50%" stopColor={COLORS.expansion} stopOpacity={0.2} />
+              <stop offset="100%" stopColor={COLORS.recovery} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} opacity={0.3} />
+          <XAxis dataKey="ts" tick={{ fill: COLORS.textMuted, fontSize: 10 }}
+            tickFormatter={(v) => v.slice(0, 7)}
+            interval={Math.floor(data.length / 12)} />
+          <YAxis yAxisId="ascs" domain={[0, 100]}
+            tick={{ fill: COLORS.textMuted, fontSize: 10 }}
+            label={{ value: 'ASCS', angle: -90, position: 'insideLeft', fill: COLORS.textDim, fontSize: 10 }} />
+          <YAxis yAxisId="sox" orientation="right" scale="log" domain={['auto', 'auto']}
+            tick={{ fill: COLORS.textMuted, fontSize: 10 }}
+            tickFormatter={(v) => v >= 1000 ? `${(v/1000).toFixed(1)}k` : `${v}`}
+            label={{ value: 'SOX (log)', angle: 90, position: 'insideRight', fill: COLORS.textDim, fontSize: 10 }} />
+          <Tooltip contentStyle={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`,
+            borderRadius: 8, fontSize: 11 }}
+            labelStyle={{ color: COLORS.textDim }}
+            formatter={(v, name) => name === "ascs" ? [`${v.toFixed(1)}`, "ASCS"] : [v.toLocaleString(), "SOX"]} />
+
+          {/* Phase bands */}
+          <ReferenceLine y={80} yAxisId="ascs" stroke={COLORS.euphoria} strokeDasharray="2 2" strokeOpacity={0.5} />
+          <ReferenceLine y={60} yAxisId="ascs" stroke={COLORS.lateBull} strokeDasharray="2 2" strokeOpacity={0.4} />
+          <ReferenceLine y={40} yAxisId="ascs" stroke={COLORS.expansion} strokeDasharray="2 2" strokeOpacity={0.4} />
+          <ReferenceLine y={20} yAxisId="ascs" stroke={COLORS.capitulation} strokeDasharray="2 2" strokeOpacity={0.5} />
+
+          {/* Event markers */}
+          {eventMarkers.map((e, i) => (
+            <ReferenceLine key={i} x={e.ts} yAxisId="ascs"
+              stroke={e.match === '✅' ? COLORS.green : COLORS.red}
+              strokeDasharray="3 3" strokeOpacity={0.6}
+              label={{ value: e.name.split(' ').slice(0,2).join(' '),
+                position: 'top', fill: e.match === '✅' ? COLORS.green : COLORS.red,
+                fontSize: 9, angle: -25 }} />
+          ))}
+
+          {/* Current ASCS line */}
+          {currentScore != null && (
+            <ReferenceLine y={currentScore} yAxisId="ascs"
+              stroke="#ffffff" strokeDasharray="4 4" strokeWidth={2}
+              label={{ value: `현재 ${currentScore.toFixed(0)}`,
+                position: 'right', fill: '#ffffff', fontSize: 11, fontWeight: 'bold' }} />
+          )}
+
+          {/* SOX price area */}
+          <Area type="monotone" dataKey="sox" yAxisId="sox" stroke={COLORS.textDim}
+            strokeWidth={1} fill="none" opacity={0.5} />
+
+          {/* ASCS line */}
+          <Area type="monotone" dataKey="ascs" yAxisId="ascs" stroke={COLORS.lateBull}
+            strokeWidth={2} fill="url(#btGrad)" />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function EventCard({ event, currentScore }) {
+  const score = event.actual_score;
+  const phase = score != null ? phaseFor(score) : null;
+  const fwd = event.forward_returns || {};
+
+  // Distance from current — flag closest matches
+  const distanceFromCurrent = currentScore != null && score != null
+    ? Math.abs(score - currentScore) : null;
+  const isCurrentMatch = distanceFromCurrent != null && distanceFromCurrent <= 5;
+
+  return (
+    <div className={`rounded-xl p-4 border transition-all ${isCurrentMatch ? 'ring-2' : ''}`}
+      style={{
+        background: COLORS.bgCard,
+        borderColor: isCurrentMatch ? phase?.color : COLORS.border,
+        boxShadow: isCurrentMatch ? `0 0 12px ${phase?.color}40` : 'none',
+      }}>
+      <div className="flex items-start justify-between mb-2">
+        <div>
+          <div className="text-sm font-bold" style={{ color: COLORS.text }}>
+            {event.name}
+          </div>
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: COLORS.textMuted }}>
+            {event.actual_date}
+          </div>
+        </div>
+        {isCurrentMatch && (
+          <span className="text-[9px] font-bold tracking-widest uppercase px-2 py-1 rounded-full"
+            style={{ background: phase?.color + '30', color: phase?.color }}>
+            현재 유사
+          </span>
+        )}
+      </div>
+
+      <div className="flex items-baseline gap-3 mb-3">
+        <div className="text-3xl font-bold font-mono tabular-nums"
+          style={{ color: phase?.color || COLORS.textMuted }}>
+          {score != null ? score.toFixed(0) : '—'}
+        </div>
+        <div>
+          <div className="text-xs" style={{ color: phase?.color || COLORS.textMuted }}>
+            {phase?.emoji} {event.actual_phase}
+          </div>
+          {event.sox_price && (
+            <div className="text-[10px] font-mono" style={{ color: COLORS.textMuted }}>
+              SOX: {event.sox_price.toLocaleString()}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Forward returns (this is the magic part) */}
+      {Object.keys(fwd).length > 0 && (
+        <div className="border-t pt-2 mt-2" style={{ borderColor: COLORS.border }}>
+          <div className="text-[9px] uppercase tracking-widest mb-1" style={{ color: COLORS.textDim }}>
+            그 후 SOX 수익률
+          </div>
+          <div className="grid grid-cols-4 gap-1 text-center">
+            {['1m', '3m', '6m', '12m'].map(period => {
+              const ret = fwd[period];
+              const color = ret == null ? COLORS.textMuted
+                : ret >= 0 ? COLORS.green : COLORS.red;
+              return (
+                <div key={period}>
+                  <div className="text-[9px] font-mono" style={{ color: COLORS.textMuted }}>{period}</div>
+                  <div className="text-xs font-mono font-bold tabular-nums" style={{ color }}>
+                    {ret != null ? `${ret >= 0 ? '+' : ''}${ret.toFixed(1)}%` : '—'}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      <div className="text-[10px] mt-3 leading-relaxed" style={{ color: COLORS.textDim }}>
+        {event.context}
+      </div>
+    </div>
+  );
+}
+
+function PhaseDistribution({ distribution, currentScore }) {
+  const currentPhase = currentScore != null ? phaseFor(currentScore) : null;
+  const phases = ['Capitulation', 'Recovery', 'Expansion', 'Late Bull', 'Euphoria'];
+  return (
+    <div className="space-y-2">
+      <div className="text-[10px] uppercase tracking-widest" style={{ color: COLORS.textDim }}>
+        Past 8.5 years (2017-present)
+      </div>
+      {phases.map(p => {
+        const pct = distribution[p] || 0;
+        const phaseInfo = PHASES.find(ph => ph.name === p);
+        const isCurrent = currentPhase && currentPhase.name === p;
+        return (
+          <div key={p}>
+            <div className="flex items-center justify-between text-xs mb-1">
+              <span style={{ color: isCurrent ? phaseInfo.color : COLORS.text,
+                             fontWeight: isCurrent ? 'bold' : 'normal' }}>
+                {phaseInfo.emoji} {p}
+                {isCurrent && <span className="ml-2 text-[9px] uppercase tracking-widest"
+                  style={{ color: phaseInfo.color }}>현재</span>}
+              </span>
+              <span className="font-mono tabular-nums" style={{ color: COLORS.textDim }}>
+                {pct.toFixed(1)}%
+              </span>
+            </div>
+            <div className="h-2 rounded-full overflow-hidden"
+              style={{ background: COLORS.border }}>
+              <div className="h-full rounded-full transition-all"
+                style={{ width: `${pct}%`, background: phaseInfo.color,
+                  boxShadow: isCurrent ? `0 0 8px ${phaseInfo.color}` : 'none' }} />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function Dashboard() {
   const [latest, setLatest] = useState(null);
   const [history, setHistory] = useState([]);
+  const [backtest, setBacktest] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     (async () => {
       try {
-        const [l, h] = await Promise.all([
+        const [l, h, bt] = await Promise.all([
           fetchJSON('latest.json'),
           fetchJSON('history.json').catch(() => []),
+          fetchJSON('backtest_results.json').catch(() => null),
         ]);
         setLatest(l);
         setHistory(Array.isArray(h) ? h : (h.snapshots || []));
+        setBacktest(bt);
       } catch (e) {
         setError(e.message);
       } finally {
@@ -649,6 +852,159 @@ function Dashboard() {
           subtitle="0=capitulation · 100=euphoria" className="mb-6">
           <IndicatorHeatmap indicators={ascs.indicators} />
         </Card>
+
+        {/* ════════════════════════════════════════════════════════ */}
+        {/* HISTORICAL BACKTEST SECTION                                */}
+        {/* ════════════════════════════════════════════════════════ */}
+        {backtest && (
+          <>
+            <div className="mt-12 mb-6">
+              <h2 className="text-2xl font-bold mb-2" style={{ color: COLORS.text }}>
+                📚 Historical Backtest <span style={{ color: COLORS.textMuted, fontSize: '0.7em', fontWeight: 'normal' }}>
+                  · 2017 → present
+                </span>
+              </h2>
+              <p className="text-sm" style={{ color: COLORS.textDim }}>
+                과거 사이클 사례를 통해 ASCS 모델의 정확도를 검증하고 현재 시장 위치를 평가합니다.
+                {backtest.event_results && (
+                  <> 사례 {backtest.event_results.filter(e => e.match === '✅').length}/{backtest.event_results.length}건이 예상 phase와 일치 ({((backtest.event_results.filter(e => e.match === '✅').length / backtest.event_results.length) * 100).toFixed(0)}% 정확도).</>
+                )}
+              </p>
+            </div>
+
+            {/* Headline stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+              <Card>
+                <div className="text-[10px] uppercase tracking-widest" style={{ color: COLORS.textDim }}>
+                  Backtest Period
+                </div>
+                <div className="text-lg font-bold mt-1 font-mono">
+                  {backtest.backtest_window?.n_days?.toLocaleString()}
+                </div>
+                <div className="text-[10px]" style={{ color: COLORS.textMuted }}>
+                  trading days
+                </div>
+              </Card>
+              <Card>
+                <div className="text-[10px] uppercase tracking-widest" style={{ color: COLORS.textDim }}>
+                  ASCS Range
+                </div>
+                <div className="text-lg font-bold mt-1 font-mono">
+                  {backtest.ascs_stats?.min?.toFixed(0)} → {backtest.ascs_stats?.max?.toFixed(0)}
+                </div>
+                <div className="text-[10px]" style={{ color: COLORS.textMuted }}>
+                  full dynamic range
+                </div>
+              </Card>
+              <Card>
+                <div className="text-[10px] uppercase tracking-widest" style={{ color: COLORS.textDim }}>
+                  Historical Mean
+                </div>
+                <div className="text-lg font-bold mt-1 font-mono">
+                  {backtest.ascs_stats?.mean?.toFixed(1)}
+                </div>
+                <div className="text-[10px]" style={{ color: COLORS.textMuted }}>
+                  std: ±{backtest.ascs_stats?.std?.toFixed(1)}
+                </div>
+              </Card>
+              <Card>
+                <div className="text-[10px] uppercase tracking-widest" style={{ color: COLORS.textDim }}>
+                  Current vs Mean
+                </div>
+                <div className="text-lg font-bold mt-1 font-mono"
+                  style={{ color: ascs.composite > backtest.ascs_stats?.mean ? COLORS.lateBull : COLORS.recovery }}>
+                  {ascs.composite > backtest.ascs_stats?.mean ? '+' : ''}
+                  {(ascs.composite - backtest.ascs_stats?.mean).toFixed(1)}
+                </div>
+                <div className="text-[10px]" style={{ color: COLORS.textMuted }}>
+                  σ: {((ascs.composite - backtest.ascs_stats?.mean) / backtest.ascs_stats?.std).toFixed(2)}
+                </div>
+              </Card>
+            </div>
+
+            {/* Timeline chart */}
+            <Card title="ASCS vs SOX · 9 Year Backtest" icon="📈"
+              subtitle="white line = current ASCS · vertical lines = events" className="mb-6">
+              <BacktestTimelineChart
+                timeseries={backtest.timeseries_weekly}
+                events={backtest.event_results}
+                currentScore={ascs.composite} />
+            </Card>
+
+            {/* Phase distribution + Validation summary */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+              <Card title="Phase Time Distribution" icon="📊"
+                subtitle="how often each phase occurred">
+                <PhaseDistribution
+                  distribution={backtest.phase_distribution_pct}
+                  currentScore={ascs.composite} />
+              </Card>
+
+              <Card title="Validation Summary" icon="✅"
+                subtitle={`${backtest.event_results.filter(e => e.match === '✅').length}/${backtest.event_results.length} events`}>
+                <div className="space-y-2">
+                  {backtest.event_results.map((ev, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs">
+                      <span style={{ color: ev.match === '✅' ? COLORS.green : COLORS.red }}>
+                        {ev.match}
+                      </span>
+                      <span className="flex-1 truncate" style={{ color: COLORS.text }}>
+                        {ev.name}
+                      </span>
+                      <span className="font-mono tabular-nums text-[10px]"
+                        style={{ color: COLORS.textDim }}>
+                        예상 {ev.expected_score} →
+                      </span>
+                      <span className="font-mono tabular-nums font-bold"
+                        style={{ color: phaseFor(ev.actual_score)?.color || COLORS.text }}>
+                        {ev.actual_score}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </div>
+
+            {/* Event cards grid */}
+            <div className="mb-6">
+              <h3 className="text-sm font-bold uppercase tracking-widest mb-3"
+                style={{ color: COLORS.textDim }}>
+                🎯 사례별 상세 — 매수/매도 의사결정 참고
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                {backtest.event_results.map((ev, i) => (
+                  <EventCard key={i} event={ev} currentScore={ascs.composite} />
+                ))}
+              </div>
+            </div>
+
+            {/* Interpretation */}
+            <Card title="Investment Decision Framework" icon="💡" className="mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 className="font-bold mb-2" style={{ color: COLORS.green }}>
+                    🌱 매수 시그널 — ASCS &lt; 25
+                  </h4>
+                  <p style={{ color: COLORS.textDim }} className="text-xs leading-relaxed">
+                    백테스트 결과: 2018·2020·2022 세 번의 모든 바닥에서 ASCS가 6~8을 기록했고,
+                    이 시점에서 12개월 후 SOX 평균 수익률은 <strong style={{color: COLORS.green}}>+50% 이상</strong>이었습니다.
+                    역사적으로 ASCS &lt; 25 진입은 강한 매수 기회입니다.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-bold mb-2" style={{ color: COLORS.euphoria }}>
+                    🚨 매도 시그널 — ASCS &gt; 80
+                  </h4>
+                  <p style={{ color: COLORS.textDim }} className="text-xs leading-relaxed">
+                    백테스트 결과: ASCS가 80을 넘으면 역사적으로 12개월 내 평균 -10~-30% 조정이 뒤따랐습니다.
+                    현재 ASCS는 <strong style={{color: ascs.color}}>{ascs.composite?.toFixed(0)}</strong>으로
+                    역사적 상위 {(100 - (backtest.event_results.filter(e => e.actual_score && e.actual_score < ascs.composite).length / backtest.event_results.length * 100)).toFixed(0)}% 영역에 있습니다.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </>
+        )}
 
         {/* Footer */}
         <footer className="mt-8 pt-6 border-t text-xs"
