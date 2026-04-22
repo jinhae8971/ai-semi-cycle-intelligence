@@ -1,6 +1,6 @@
 [
   {
-    "ts": "2026-04-22T22:09:19.591196+00:00",
+    "ts": "2026-04-22T22:21:34.867549+00:00",
     "ascs": 76.22,
     "phase": "Late Bull",
     "dimensions": {
@@ -15,7 +15,7 @@
       "nvda_forward_pe": 18.01733,
       "nvda_price_to_sales": 22.792479,
       "nvda_revenue_growth_pct": 73.2,
-      "nvda_wk52_pos_pct": 95.82316350738066,
+      "nvda_wk52_pos_pct": 95.8231632127291,
       "nvda_short_pct": 1.21,
       "sox_above_sma200_pct": 40.681314691817725,
       "sox_dist_sma200_pct": 40.681314691817725,
@@ -34,7 +34,7 @@
       "kospi_weekly_rsi": 72.49319144503389,
       "samsung_wk52_pos_pct": 99.10077756747265,
       "samsung_revenue_growth_pct": 23.799999999999997,
-      "skhynix_wk52_pos_pct": 99.90565641114512,
+      "skhynix_wk52_pos_pct": 99.90565641253585,
       "skhynix_revenue_growth_pct": 66.10000000000001,
       "vix": 18.920000076293945
     },
