@@ -1,6 +1,6 @@
 [
   {
-    "ts": "2026-04-22T21:57:33.656175+00:00",
+    "ts": "2026-04-22T22:02:06.138912+00:00",
     "ascs": 72.77,
     "phase": "Late Bull",
     "dimensions": {
@@ -15,7 +15,7 @@
       "nvda_forward_pe": 18.01733,
       "nvda_price_to_sales": 22.792479,
       "nvda_revenue_growth_pct": 73.2,
-      "nvda_wk52_pos_pct": 95.8231632127291,
+      "nvda_wk52_pos_pct": 95.82316291807751,
       "nvda_short_pct": 1.21,
       "sox_above_sma200_pct": 40.681314691817725,
       "sox_dist_sma200_pct": 40.681314691817725,
