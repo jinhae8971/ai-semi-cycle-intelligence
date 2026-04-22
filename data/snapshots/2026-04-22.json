@@ -1,0 +1,1691 @@
+{
+  "generated_at": "2026-04-22T21:57:33.656175+00:00",
+  "ascs": {
+    "composite": 72.77,
+    "phase": "Late Bull",
+    "emoji": "🔥",
+    "color": "#e76f51",
+    "dimensions": {
+      "valuation": 43.93,
+      "earnings": 82.11,
+      "capital": 73.57,
+      "sentiment": 81.35,
+      "macro": null,
+      "technical": 98.99
+    },
+    "indicators": [
+      {
+        "metric": "nvda_forward_pe",
+        "raw": 18.01733,
+        "score": 0.0,
+        "dimension": "valuation",
+        "bottom": 25,
+        "top": 70
+      },
+      {
+        "metric": "nvda_price_to_sales",
+        "raw": 22.792479,
+        "score": 54.78695925925926,
+        "dimension": "valuation",
+        "bottom": 8,
+        "top": 35
+      },
+      {
+        "metric": "sox_avg_pe_pctl",
+        "raw": 50.272654727272744,
+        "score": 43.24664961038964,
+        "dimension": "valuation",
+        "bottom": 20,
+        "top": 90
+      },
+      {
+        "metric": "top10_mcap_to_gdp_pct",
+        "raw": 39.22005060266667,
+        "score": 100.0,
+        "dimension": "valuation",
+        "bottom": 5,
+        "top": 18
+      },
+      {
+        "metric": "nvda_revenue_growth_pct",
+        "raw": 73.2,
+        "score": 75.63636363636364,
+        "dimension": "earnings",
+        "bottom": -10,
+        "top": 100
+      },
+      {
+        "metric": "semi_avg_revenue_growth_pct",
+        "raw": 40.45,
+        "score": 73.93333333333334,
+        "dimension": "earnings",
+        "bottom": -15,
+        "top": 60
+      },
+      {
+        "metric": "hyperscaler_capex_yoy_pct",
+        "raw": 94.81365068614464,
+        "score": 100.0,
+        "dimension": "earnings",
+        "bottom": -5,
+        "top": 50
+      },
+      {
+        "metric": "memory_capex_yoy_pct",
+        "raw": 89.08895778678749,
+        "score": 100.0,
+        "dimension": "capital",
+        "bottom": -30,
+        "top": 50
+      },
+      {
+        "metric": "semi_capex_to_revenue_pct",
+        "raw": 18.370711679247755,
+        "score": 47.13959854203525,
+        "dimension": "capital",
+        "bottom": 8,
+        "top": 30
+      },
+      {
+        "metric": "vix",
+        "raw": 18.920000076293945,
+        "score": 66.99999968210855,
+        "dimension": "sentiment",
+        "bottom": 35,
+        "top": 11
+      },
+      {
+        "metric": "sox_above_sma200_pct",
+        "raw": 40.681314691817725,
+        "score": 100.0,
+        "dimension": "sentiment",
+        "bottom": -20,
+        "top": 35
+      },
+      {
+        "metric": "nvda_short_pct",
+        "raw": 1.21,
+        "score": 84.22222222222221,
+        "dimension": "sentiment",
+        "bottom": 5,
+        "top": 0.5
+      },
+      {
+        "metric": "us_10y_yield",
+        "raw": null,
+        "score": null,
+        "dimension": "macro",
+        "bottom": 5.5,
+        "top": 2.5
+      },
+      {
+        "metric": "dxy",
+        "raw": null,
+        "score": null,
+        "dimension": "macro",
+        "bottom": 110,
+        "top": 95
+      },
+      {
+        "metric": "ism_pmi",
+        "raw": null,
+        "score": null,
+        "dimension": "macro",
+        "bottom": 42,
+        "top": 58
+      },
+      {
+        "metric": "m2_yoy_pct",
+        "raw": null,
+        "score": null,
+        "dimension": "macro",
+        "bottom": -3,
+        "top": 8
+      },
+      {
+        "metric": "sox_weekly_rsi",
+        "raw": 78.32138660378868,
+        "score": 96.64277320757736,
+        "dimension": "technical",
+        "bottom": 30,
+        "top": 80
+      },
+      {
+        "metric": "sox_daily_rsi",
+        "raw": 80.49351935209597,
+        "score": 100.0,
+        "dimension": "technical",
+        "bottom": 30,
+        "top": 75
+      },
+      {
+        "metric": "nvda_wk52_pos_pct",
+        "raw": 95.8231632127291,
+        "score": 100.0,
+        "dimension": "technical",
+        "bottom": 10,
+        "top": 95
+      },
+      {
+        "metric": "sox_dist_sma200_pct",
+        "raw": 40.681314691817725,
+        "score": 100.0,
+        "dimension": "technical",
+        "bottom": -25,
+        "top": 35
+      }
+    ],
+    "weights_used": {
+      "valuation": 0.278,
+      "earnings": 0.222,
+      "capital": 0.167,
+      "sentiment": 0.167,
+      "technical": 0.167
+    }
+  },
+  "leaders": {
+    "NVDA": {
+      "name": "Nvidia",
+      "trailingPE": 41.32653,
+      "forwardPE": 18.01733,
+      "priceToSales": 22.792479,
+      "priceToBook": 31.288628,
+      "marketCap": 4921762512896,
+      "enterpriseValue": 4805939953664,
+      "evToRevenue": 22.256,
+      "evToEbitda": 36.073,
+      "profitMargins": 0.55603004,
+      "operatingMargins": 0.65024,
+      "revenueGrowth": 0.732,
+      "earningsGrowth": 0.956,
+      "freeCashflow": 58128998400,
+      "operatingCashflow": 102717997056,
+      "totalCash": 62556000256,
+      "totalDebt": 11411999744,
+      "shortRatio": 1.54,
+      "shortPercentOfFloat": 0.0121,
+      "beta": 2.335,
+      "fiftyTwoWeekHigh": 212.19,
+      "fiftyTwoWeekLow": 102.02,
+      "fiftyDayAverage": 184.1896,
+      "twoHundredDayAverage": 182.2004,
+      "averageVolume": 174774277,
+      "currentPrice": 202.5,
+      "currency": "USD",
+      "current": 202.5,
+      "chg_1d_pct": 1.3107839969903834,
+      "chg_1w_pct": 2.092258012998771,
+      "chg_1m_pct": 15.582193794114518,
+      "sma_200": 182.40577278137206,
+      "dist_from_sma200_pct": 11.016223287358606,
+      "sma_50": 184.43477844238282,
+      "dist_from_sma50_pct": 9.7949105424608,
+      "wk52_position_pct": 95.8231632127291,
+      "wk52_high": 207.01727294921875,
+      "wk52_low": 98.86669921875,
+      "daily_rsi": 69.81060304122292,
+      "weekly_rsi": 62.76953204220532,
+      "realized_vol_21d": 32.71830542037776
+    },
+    "AVGO": {
+      "name": "Broadcom",
+      "trailingPE": 82.067955,
+      "forwardPE": 23.327694,
+      "priceToSales": 29.3474,
+      "priceToBook": 25.060778,
+      "marketCap": 2003899252736,
+      "enterpriseValue": 1956024549376,
+      "evToRevenue": 28.646,
+      "evToEbitda": 52.556,
+      "profitMargins": 0.36571997,
+      "operatingMargins": 0.44943002,
+      "revenueGrowth": 0.295,
+      "earningsGrowth": 0.316,
+      "freeCashflow": 25503750144,
+      "operatingCashflow": 29684000768,
+      "totalCash": 14174000128,
+      "totalDebt": 66056998912,
+      "shortRatio": 1.83,
+      "shortPercentOfFloat": 0.0115,
+      "beta": 1.253,
+      "fiftyTwoWeekHigh": 423.2,
+      "fiftyTwoWeekLow": 175.82,
+      "fiftyDayAverage": 336.5952,
+      "twoHundredDayAverage": 334.5051,
+      "averageVolume": 25982921,
+      "currentPrice": 422.65,
+      "currency": "USD",
+      "current": 422.6499938964844,
+      "chg_1d_pct": 5.092368845254547,
+      "chg_1w_pct": 6.068209050043016,
+      "chg_1m_pct": 32.787703839228,
+      "sma_200": 334.1167639160156,
+      "dist_from_sma200_pct": 26.497691688023984,
+      "sma_50": 337.78441528320315,
+      "dist_from_sma50_pct": 25.124184175912532,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 422.6499938964844,
+      "wk52_low": 168.21702575683594,
+      "daily_rsi": 79.1525834298504,
+      "weekly_rsi": 69.00790941269952,
+      "realized_vol_21d": 45.14051597363543
+    },
+    "TSM": {
+      "name": "TSMC ADR",
+      "trailingPE": 33.199657,
+      "forwardPE": 20.08275,
+      "priceToSales": 0.48963603,
+      "priceToBook": 59.26557,
+      "marketCap": 2009418956800,
+      "enterpriseValue": 7219339853824,
+      "evToRevenue": 1.759,
+      "evToEbitda": 2.527,
+      "profitMargins": 0.46505,
+      "operatingMargins": 0.58105,
+      "revenueGrowth": 0.351,
+      "earningsGrowth": 0.584,
+      "freeCashflow": 721560469504,
+      "operatingCashflow": 2348377702400,
+      "totalCash": 3383600873472,
+      "totalDebt": 1016267997184,
+      "shortRatio": 1.55,
+      "shortPercentOfFloat": 0.0046,
+      "beta": 1.251,
+      "fiftyTwoWeekHigh": 390.21,
+      "fiftyTwoWeekLow": 156.0,
+      "fiftyDayAverage": 355.3772,
+      "twoHundredDayAverage": 298.94986,
+      "averageVolume": 13286740,
+      "currentPrice": 387.44,
+      "currency": "USD",
+      "current": 387.44000244140625,
+      "chg_1d_pct": 5.259730649696603,
+      "chg_1w_pct": 6.629969982999695,
+      "chg_1m_pct": 12.873999254597601,
+      "sma_200": 298.44941688537597,
+      "dist_from_sma200_pct": 29.81764430459868,
+      "sma_50": 355.53108581542966,
+      "dist_from_sma50_pct": 8.975000470856664,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 387.44000244140625,
+      "wk52_low": 149.54776000976562,
+      "daily_rsi": 64.81379518571902,
+      "weekly_rsi": 71.30213545752939,
+      "realized_vol_21d": 47.821166327202725
+    },
+    "AMD": {
+      "name": "AMD",
+      "trailingPE": 115.82443,
+      "forwardPE": 27.64442,
+      "priceToSales": 14.283451,
+      "priceToBook": 7.851487,
+      "marketCap": 494764457984,
+      "enterpriseValue": 457289596928,
+      "evToRevenue": 13.202,
+      "evToEbitda": 67.797,
+      "profitMargins": 0.12515001,
+      "operatingMargins": 0.17059,
+      "revenueGrowth": 0.341,
+      "earningsGrowth": 2.171,
+      "freeCashflow": 4587250176,
+      "operatingCashflow": 7709000192,
+      "totalCash": 10552000512,
+      "totalDebt": 4006000128,
+      "shortRatio": 1.13,
+      "shortPercentOfFloat": 0.0224,
+      "beta": 1.963,
+      "fiftyTwoWeekHigh": 304.1,
+      "fiftyTwoWeekLow": 90.12,
+      "fiftyDayAverage": 215.3048,
+      "twoHundredDayAverage": 203.8674,
+      "averageVolume": 37008645,
+      "currentPrice": 303.46,
+      "currency": "USD",
+      "current": 303.4599914550781,
+      "chg_1d_pct": 6.668073349461201,
+      "chg_1w_pct": 9.056271402663562,
+      "chg_1m_pct": 47.762574217289554,
+      "sma_200": 204.7106999206543,
+      "dist_from_sma200_pct": 48.23846119069446,
+      "sma_50": 217.05400024414064,
+      "dist_from_sma50_pct": 39.80852281632621,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 303.4599914550781,
+      "wk52_low": 86.26000213623047,
+      "daily_rsi": 83.31219561191233,
+      "weekly_rsi": 72.67032850322826,
+      "realized_vol_21d": 55.65111105666223
+    },
+    "MU": {
+      "name": "Micron",
+      "trailingPE": 22.9835,
+      "forwardPE": 4.8230186,
+      "priceToSales": 9.4590025,
+      "priceToBook": 7.5887733,
+      "marketCap": 549747785728,
+      "enterpriseValue": 502990143488,
+      "evToRevenue": 8.654,
+      "evToEbitda": 13.667,
+      "profitMargins": 0.41486,
+      "operatingMargins": 0.67624,
+      "revenueGrowth": 1.963,
+      "earningsGrowth": 7.56,
+      "freeCashflow": 2893499904,
+      "operatingCashflow": 30652999680,
+      "totalCash": 14588999680,
+      "totalDebt": 10798000128,
+      "shortRatio": 0.7,
+      "shortPercentOfFloat": 0.0279,
+      "beta": 1.606,
+      "fiftyTwoWeekHigh": 491.98,
+      "fiftyTwoWeekLow": 72.5,
+      "fiftyDayAverage": 408.8288,
+      "twoHundredDayAverage": 261.5008,
+      "averageVolume": 41394193,
+      "currentPrice": 487.48,
+      "currency": "USD",
+      "current": 487.4800109863281,
+      "chg_1d_pct": 8.47834921214423,
+      "chg_1w_pct": 6.615926180074072,
+      "chg_1m_pct": 23.299062892093847,
+      "sma_200": 263.1741524887085,
+      "dist_from_sma200_pct": 85.23096070661555,
+      "sma_50": 410.7950122070313,
+      "dist_from_sma50_pct": 18.667461020838626,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 487.4800109863281,
+      "wk52_low": 70.04235076904297,
+      "daily_rsi": 68.32429541542737,
+      "weekly_rsi": 70.90469755823925,
+      "realized_vol_21d": 78.76002216624181
+    },
+    "ASML": {
+      "name": "ASML",
+      "trailingPE": 47.56705,
+      "forwardPE": 30.222778,
+      "priceToSales": 16.824583,
+      "priceToBook": 1259.3414,
+      "marketCap": 566865625088,
+      "enterpriseValue": 556616318976,
+      "evToRevenue": 16.52,
+      "evToEbitda": 43.813,
+      "profitMargins": 0.29713,
+      "operatingMargins": 0.36020002,
+      "revenueGrowth": 0.132,
+      "earningsGrowth": 0.192,
+      "freeCashflow": 8243274752,
+      "operatingCashflow": 10531500032,
+      "totalCash": 8376300032,
+      "totalDebt": 2705600000,
+      "shortRatio": 0.43,
+      "shortPercentOfFloat": 0.0018000001,
+      "beta": 1.382,
+      "fiftyTwoWeekHigh": 1547.22,
+      "fiftyTwoWeekLow": 651.46,
+      "fiftyDayAverage": 1402.3738,
+      "twoHundredDayAverage": 1091.0977,
+      "averageVolume": 1796380,
+      "currentPrice": 1443.66,
+      "currency": "USD",
+      "current": 1443.6600341796875,
+      "chg_1d_pct": -1.049366116566408,
+      "chg_1w_pct": 2.3270046105915876,
+      "chg_1m_pct": 3.161308888334302,
+      "sma_200": 1092.6709454345703,
+      "dist_from_sma200_pct": 32.12212150525555,
+      "sma_50": 1402.65720703125,
+      "dist_from_sma50_pct": 2.923225071877744,
+      "wk52_position_pct": 90.7260554639565,
+      "wk52_high": 1526.510009765625,
+      "wk52_low": 633.1471557617188,
+      "daily_rsi": 53.539161319404556,
+      "weekly_rsi": 65.4244492376886,
+      "realized_vol_21d": 53.05304805446933
+    },
+    "AMAT": {
+      "name": "Applied Materials",
+      "trailingPE": 41.425053,
+      "forwardPE": 28.674723,
+      "priceToSales": 11.349178,
+      "priceToBook": 14.744382,
+      "marketCap": 320205717504,
+      "enterpriseValue": 311623188480,
+      "evToRevenue": 11.045,
+      "evToEbitda": 35.057,
+      "profitMargins": 0.27784002,
+      "operatingMargins": 0.29892,
+      "revenueGrowth": -0.021,
+      "earningsGrowth": 0.752,
+      "freeCashflow": 4341749760,
+      "operatingCashflow": 8718999552,
+      "totalCash": 8511000064,
+      "totalDebt": 7190000128,
+      "shortRatio": 2.01,
+      "shortPercentOfFloat": 0.0165,
+      "beta": 1.637,
+      "fiftyTwoWeekHigh": 407.29,
+      "fiftyTwoWeekLow": 142.74,
+      "fiftyDayAverage": 361.538,
+      "twoHundredDayAverage": 261.3006,
+      "averageVolume": 7167788,
+      "currentPrice": 403.48,
+      "currency": "USD",
+      "current": 403.4800109863281,
+      "chg_1d_pct": 2.3203978205156517,
+      "chg_1w_pct": 3.4829487823611283,
+      "chg_1m_pct": 7.885243327895508,
+      "sma_200": 261.86705558776856,
+      "dist_from_sma200_pct": 54.07818676568725,
+      "sma_50": 362.944365234375,
+      "dist_from_sma50_pct": 11.16855629533655,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 403.4800109863281,
+      "wk52_low": 137.07376098632812,
+      "daily_rsi": 64.76329814189768,
+      "weekly_rsi": 72.26846439413909,
+      "realized_vol_21d": 55.48183331558144
+    },
+    "KLAC": {
+      "name": "KLA",
+      "trailingPE": 52.860565,
+      "forwardPE": 37.626377,
+      "priceToSales": 18.681683,
+      "priceToBook": 43.477615,
+      "marketCap": 238090797056,
+      "enterpriseValue": 234922262528,
+      "evToRevenue": 18.433,
+      "evToEbitda": 40.912,
+      "profitMargins": 0.35764,
+      "operatingMargins": 0.41313,
+      "revenueGrowth": 0.072,
+      "earningsGrowth": 0.409,
+      "freeCashflow": 3222999808,
+      "operatingCashflow": 4766347776,
+      "totalCash": 5207463936,
+      "totalDebt": 6109477888,
+      "shortRatio": 3.19,
+      "shortPercentOfFloat": 0.027,
+      "beta": 1.435,
+      "fiftyTwoWeekHigh": 1823.27,
+      "fiftyTwoWeekLow": 652.88,
+      "fiftyDayAverage": 1532.965,
+      "twoHundredDayAverage": 1224.8326,
+      "averageVolume": 1044257,
+      "currentPrice": 1812.06,
+      "currency": "USD",
+      "current": 1812.06005859375,
+      "chg_1d_pct": 1.4949317816226992,
+      "chg_1w_pct": 4.450533711523685,
+      "chg_1m_pct": 15.698614241305764,
+      "sma_200": 1227.1239025878906,
+      "dist_from_sma200_pct": 47.6672449108263,
+      "sma_50": 1540.251806640625,
+      "dist_from_sma50_pct": 17.64700101511023,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 1812.06005859375,
+      "wk52_low": 631.5714111328125,
+      "daily_rsi": 68.66735460652026,
+      "weekly_rsi": 72.89012964250989,
+      "realized_vol_21d": 51.376430503491
+    },
+    "LRCX": {
+      "name": "Lam Research",
+      "trailingPE": 54.639915,
+      "forwardPE": 37.11634,
+      "priceToSales": 16.222282,
+      "priceToBook": 32.747562,
+      "marketCap": 333538754560,
+      "enterpriseValue": 320948273152,
+      "evToRevenue": 15.61,
+      "evToEbitda": 43.705,
+      "profitMargins": 0.3022,
+      "operatingMargins": 0.33868998,
+      "revenueGrowth": 0.221,
+      "earningsGrowth": 0.37,
+      "freeCashflow": 4816949760,
+      "operatingCashflow": 7121860096,
+      "totalCash": 6180440064,
+      "totalDebt": 4483747840,
+      "shortRatio": 2.68,
+      "shortPercentOfFloat": 0.025,
+      "beta": 1.79,
+      "fiftyTwoWeekHigh": 273.5,
+      "fiftyTwoWeekLow": 66.34,
+      "fiftyDayAverage": 233.2294,
+      "twoHundredDayAverage": 167.9226,
+      "averageVolume": 10635301,
+      "currentPrice": 265.55,
+      "currency": "USD",
+      "current": 265.54998779296875,
+      "chg_1d_pct": 2.7789576233589575,
+      "chg_1w_pct": 1.7588889056507906,
+      "chg_1m_pct": 11.183215485102881,
+      "sma_200": 168.44351654052736,
+      "dist_from_sma200_pct": 57.649278076593504,
+      "sma_50": 233.86998504638672,
+      "dist_from_sma50_pct": 13.545989127377123,
+      "wk52_position_pct": 96.72383648921497,
+      "wk52_high": 272.4100036621094,
+      "wk52_low": 63.01826095581055,
+      "daily_rsi": 61.68297199673462,
+      "weekly_rsi": 69.63742196296222,
+      "realized_vol_21d": 66.1557353844209
+    },
+    "INTC": {
+      "name": "Intel",
+      "trailingPE": null,
+      "forwardPE": 58.36433,
+      "priceToSales": 6.200619,
+      "priceToBook": 2.852211,
+      "marketCap": 327721320448,
+      "enterpriseValue": 352740704256,
+      "evToRevenue": 6.674,
+      "evToEbitda": 27.922,
+      "profitMargins": -0.00505,
+      "operatingMargins": 0.051409997,
+      "revenueGrowth": -0.041,
+      "earningsGrowth": null,
+      "freeCashflow": -4504500224,
+      "operatingCashflow": 9697000448,
+      "totalCash": 37416001536,
+      "totalDebt": 47109001216,
+      "shortRatio": 1.46,
+      "shortPercentOfFloat": 0.0238,
+      "beta": 1.349,
+      "fiftyTwoWeekHigh": 70.33,
+      "fiftyTwoWeekLow": 18.97,
+      "fiftyDayAverage": 49.653,
+      "twoHundredDayAverage": 37.7201,
+      "averageVolume": 102242942,
+      "currentPrice": 65.27,
+      "currency": "USD",
+      "current": 65.2699966430664,
+      "chg_1d_pct": -1.4941223381318536,
+      "chg_1w_pct": -4.715333367786267,
+      "chg_1m_pct": 48.138889261662165,
+      "sma_200": 37.93645003318787,
+      "dist_from_sma200_pct": 72.05088137125743,
+      "sma_50": 49.953600006103514,
+      "dist_from_sma50_pct": 30.661246907312933,
+      "wk52_position_pct": 93.43361796734025,
+      "wk52_high": 68.5,
+      "wk52_low": 19.309999465942383,
+      "daily_rsi": 68.0925246874439,
+      "weekly_rsi": 72.03731490729962,
+      "realized_vol_21d": 74.14754197163475
+    }
+  },
+  "hyperscalers": {
+    "MSFT": {
+      "name": "Microsoft",
+      "trailingPE": 27.074423,
+      "forwardPE": 22.898357,
+      "priceToSales": 10.533945,
+      "priceToBook": 8.228072,
+      "marketCap": 3217625186304,
+      "enterpriseValue": 3183470706688,
+      "evToRevenue": 10.422,
+      "evToEbitda": 18.164,
+      "profitMargins": 0.39044,
+      "operatingMargins": 0.47094002,
+      "revenueGrowth": 0.167,
+      "earningsGrowth": 0.598,
+      "freeCashflow": 53640626176,
+      "operatingCashflow": 160506003456,
+      "totalCash": 89461997568,
+      "totalDebt": 123278000128,
+      "shortRatio": 2.51,
+      "shortPercentOfFloat": 0.0109,
+      "beta": 1.107,
+      "fiftyTwoWeekHigh": 555.45,
+      "fiftyTwoWeekLow": 356.28,
+      "fiftyDayAverage": 393.216,
+      "twoHundredDayAverage": 471.21796,
+      "averageVolume": 37986303,
+      "currentPrice": 432.92,
+      "currency": "USD",
+      "capex_latest": 64551000000.0,
+      "capex_yoy_pct": 45.13343975537918,
+      "current": 432.9200134277344,
+      "chg_1d_pct": 2.065260677572822,
+      "chg_1w_pct": 3.012421683702371,
+      "chg_1m_pct": 16.1453090009255,
+      "sma_200": 469.42497817993166,
+      "dist_from_sma200_pct": -7.7765279755106835,
+      "sma_50": 393.49230407714845,
+      "dist_from_sma50_pct": 10.0199442129002,
+      "wk52_position_pct": 41.5994718552003,
+      "wk52_high": 539.8252563476562,
+      "wk52_low": 356.7699890136719,
+      "daily_rsi": 73.0968875525241,
+      "weekly_rsi": 50.82678295506837,
+      "realized_vol_21d": 30.25311121440948
+    },
+    "AMZN": {
+      "name": "Amazon",
+      "trailingPE": 35.615063,
+      "forwardPE": 27.061626,
+      "priceToSales": 3.8305397,
+      "priceToBook": 6.6663184,
+      "marketCap": 2746205863936,
+      "enterpriseValue": 2738282037248,
+      "evToRevenue": 3.819,
+      "evToEbitda": 18.79,
+      "profitMargins": 0.108339995,
+      "operatingMargins": 0.10533,
+      "revenueGrowth": 0.136,
+      "earningsGrowth": 0.05,
+      "freeCashflow": 23793125376,
+      "operatingCashflow": 139514003456,
+      "totalCash": 123028996096,
+      "totalDebt": 178546999296,
+      "shortRatio": 2.02,
+      "shortPercentOfFloat": 0.0089,
+      "beta": 1.383,
+      "fiftyTwoWeekHigh": 258.6,
+      "fiftyTwoWeekLow": 178.85,
+      "fiftyDayAverage": 215.5476,
+      "twoHundredDayAverage": 225.8588,
+      "averageVolume": 51655118,
+      "currentPrice": 255.36,
+      "currency": "USD",
+      "capex_latest": 131819000000.0,
+      "capex_yoy_pct": 58.81998578296124,
+      "current": 255.36000061035156,
+      "chg_1d_pct": 2.1807838295304194,
+      "chg_1w_pct": 2.266721558383744,
+      "chg_1m_pct": 23.21945273195565,
+      "sma_200": 226.0182499694824,
+      "dist_from_sma200_pct": 12.98202717914636,
+      "sma_50": 216.48040008544922,
+      "dist_from_sma50_pct": 17.95987096732812,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 255.36000061035156,
+      "wk52_low": 173.17999267578125,
+      "daily_rsi": 76.82277508472049,
+      "weekly_rsi": 63.70535940657047,
+      "realized_vol_21d": 34.32972750877489
+    },
+    "GOOGL": {
+      "name": "Alphabet",
+      "trailingPE": 31.418518,
+      "forwardPE": 25.167664,
+      "priceToSales": 10.189641,
+      "priceToBook": 9.877449,
+      "marketCap": 4104754298880,
+      "enterpriseValue": 3959865212928,
+      "evToRevenue": 9.83,
+      "evToEbitda": 26.368,
+      "profitMargins": 0.32810003,
+      "operatingMargins": 0.31568,
+      "revenueGrowth": 0.18,
+      "earningsGrowth": 0.311,
+      "freeCashflow": 38088376320,
+      "operatingCashflow": 164713005056,
+      "totalCash": 126843002880,
+      "totalDebt": 66995998720,
+      "shortRatio": 2.74,
+      "shortPercentOfFloat": 0.0137,
+      "beta": 1.128,
+      "fiftyTwoWeekHigh": 349.0,
+      "fiftyTwoWeekLow": 147.84,
+      "fiftyDayAverage": 308.1842,
+      "twoHundredDayAverage": 274.0776,
+      "averageVolume": 32601772,
+      "currentPrice": 339.32,
+      "currency": "USD",
+      "capex_latest": 91447000000.0,
+      "capex_yoy_pct": 74.06871609403257,
+      "current": 339.32000732421875,
+      "chg_1d_pct": 2.115621474771645,
+      "chg_1w_pct": 0.9820898810911638,
+      "chg_1m_pct": 16.829639330647517,
+      "sma_200": 274.6097618865967,
+      "dist_from_sma200_pct": 23.564437401298544,
+      "sma_50": 308.4063323974609,
+      "dist_from_sma50_pct": 10.023683588609856,
+      "wk52_position_pct": 97.85647931552613,
+      "wk52_high": 343.4482421875,
+      "wk52_low": 150.85691833496094,
+      "daily_rsi": 66.69042682715306,
+      "weekly_rsi": 64.07817038099583,
+      "realized_vol_21d": 37.53811204095954
+    },
+    "META": {
+      "name": "Meta",
+      "trailingPE": 28.735945,
+      "forwardPE": 18.814228,
+      "priceToSales": 8.522461,
+      "priceToBook": 7.8577332,
+      "marketCap": 1712724901888,
+      "enterpriseValue": 1695356813312,
+      "evToRevenue": 8.436,
+      "evToEbitda": 16.639,
+      "profitMargins": 0.30084,
+      "operatingMargins": 0.41314998,
+      "revenueGrowth": 0.238,
+      "earningsGrowth": 0.107,
+      "freeCashflow": 23432374272,
+      "operatingCashflow": 115799998464,
+      "totalCash": 81592000512,
+      "totalDebt": 85080997888,
+      "shortRatio": 1.65,
+      "shortPercentOfFloat": 0.0121,
+      "beta": 1.309,
+      "fiftyTwoWeekHigh": 796.25,
+      "fiftyTwoWeekLow": 516.52,
+      "fiftyDayAverage": 630.0118,
+      "twoHundredDayAverage": 680.79156,
+      "averageVolume": 16054232,
+      "currentPrice": 674.72,
+      "currency": "USD",
+      "capex_latest": 69691000000.0,
+      "capex_yoy_pct": 87.05980244792786,
+      "current": 674.719970703125,
+      "chg_1d_pct": 0.8791255923035424,
+      "chg_1w_pct": -0.31764215131006024,
+      "chg_1m_pct": 13.796125978328465,
+      "sma_200": 679.6050250244141,
+      "dist_from_sma200_pct": -0.7188078577131773,
+      "sma_50": 629.7062365722657,
+      "dist_from_sma50_pct": 7.148370385512859,
+      "wk52_position_pct": 60.808821374050304,
+      "wk52_high": 788.1489868164062,
+      "wk52_low": 498.72412109375,
+      "daily_rsi": 63.53580283377397,
+      "weekly_rsi": 53.55912726280405,
+      "realized_vol_21d": 51.27164809229333
+    },
+    "ORCL": {
+      "name": "Oracle",
+      "trailingPE": 33.723022,
+      "forwardPE": 23.523539,
+      "priceToSales": 8.415922,
+      "priceToBook": 16.072346,
+      "marketCap": 539258650624,
+      "enterpriseValue": 649596239872,
+      "evToRevenue": 10.138,
+      "evToEbitda": 23.672,
+      "profitMargins": 0.25298,
+      "operatingMargins": 0.32676,
+      "revenueGrowth": 0.217,
+      "earningsGrowth": 0.245,
+      "freeCashflow": -22298499072,
+      "operatingCashflow": 23513999360,
+      "totalCash": 39132000256,
+      "totalDebt": 162164998144,
+      "shortRatio": 1.0,
+      "shortPercentOfFloat": 0.0162,
+      "beta": 1.597,
+      "fiftyTwoWeekHigh": 345.72,
+      "fiftyTwoWeekLow": 130.99,
+      "fiftyDayAverage": 153.158,
+      "twoHundredDayAverage": 214.8301,
+      "averageVolume": 29888109,
+      "currentPrice": 187.5,
+      "currency": "USD",
+      "capex_latest": 21215000000.0,
+      "capex_yoy_pct": 208.98630935042237,
+      "current": 187.5,
+      "chg_1d_pct": 3.4939569989683505,
+      "chg_1w_pct": 5.136258747451383,
+      "chg_1m_pct": 27.918185660421347,
+      "sma_200": 213.3212342071533,
+      "dist_from_sma200_pct": -12.104390030895217,
+      "sma_50": 153.3568212890625,
+      "dist_from_sma50_pct": 22.26388003086015,
+      "wk52_position_pct": 30.795329869139948,
+      "wk52_high": 325.75933837890625,
+      "wk52_low": 125.97608947753906,
+      "daily_rsi": 73.34750482103564,
+      "weekly_rsi": 53.066428709874444,
+      "realized_vol_21d": 62.8850115149372
+    }
+  },
+  "indices": {
+    "^SOX": {
+      "name": "PHLX Semiconductor (SOX)",
+      "current": 9909.2666015625,
+      "chg_1d_pct": 2.7163982300177247,
+      "chg_1w_pct": 6.21604952616146,
+      "chg_1m_pct": 25.868559247449816,
+      "sma_200": 7043.768835449218,
+      "dist_from_sma200_pct": 40.681314691817725,
+      "sma_50": 8205.7444921875,
+      "dist_from_sma50_pct": 20.76011641596791,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 9909.2666015625,
+      "wk52_low": 3832.050048828125,
+      "daily_rsi": 80.49351935209597,
+      "weekly_rsi": 78.32138660378868,
+      "realized_vol_21d": 41.66690969978105
+    },
+    "SOXX": {
+      "name": "iShares Semi ETF (SOXX)",
+      "current": 431.7699890136719,
+      "chg_1d_pct": 2.6313231484274224,
+      "chg_1w_pct": 6.360383305881667,
+      "chg_1m_pct": 26.611343300571665,
+      "sma_200": 301.9365111541748,
+      "dist_from_sma200_pct": 43.00025769099567,
+      "sma_50": 356.01580932617185,
+      "dist_from_sma50_pct": 21.278319024899297,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 431.7699890136719,
+      "wk52_low": 165.76089477539062,
+      "daily_rsi": 80.79179900258403,
+      "weekly_rsi": 78.26869571277129,
+      "realized_vol_21d": 41.6003918778338
+    },
+    "SMH": {
+      "name": "VanEck Semi ETF (SMH)",
+      "current": 476.8299865722656,
+      "chg_1d_pct": 2.619115657521931,
+      "chg_1w_pct": 4.843887284650772,
+      "chg_1m_pct": 20.84188423366724,
+      "sma_200": 354.6509715270996,
+      "dist_from_sma200_pct": 34.45049495256496,
+      "sma_50": 409.78080017089843,
+      "dist_from_sma50_pct": 16.362207886119705,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 476.8299865722656,
+      "wk52_low": 191.3047332763672,
+      "daily_rsi": 78.46128838015602,
+      "weekly_rsi": 76.27961696865398,
+      "realized_vol_21d": 37.48681680764442
+    },
+    "^GSPC": {
+      "name": "S&P 500",
+      "current": 7137.89990234375,
+      "chg_1d_pct": 1.0460084168953943,
+      "chg_1w_pct": 1.3721953982170243,
+      "chg_1m_pct": 8.869691227952071,
+      "sma_200": 6696.664040527344,
+      "dist_from_sma200_pct": 6.588890515428347,
+      "sma_50": 6781.4612109375,
+      "dist_from_sma50_pct": 5.256075059920229,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 7137.89990234375,
+      "wk52_low": 5287.759765625,
+      "daily_rsi": 70.40971439023195,
+      "weekly_rsi": 63.54532662929712,
+      "realized_vol_21d": 17.816531113167816
+    },
+    "^NDX": {
+      "name": "Nasdaq 100",
+      "current": 26937.275390625,
+      "chg_1d_pct": 1.7289042240786534,
+      "chg_1w_pct": 2.2947457206736743,
+      "chg_1m_pct": 12.227194588052303,
+      "sma_200": 24669.033330078124,
+      "dist_from_sma200_pct": 9.194693728761894,
+      "sma_50": 24846.560546875,
+      "dist_from_sma50_pct": 8.414504050996108,
+      "wk52_position_pct": 100.0,
+      "wk52_high": 26937.275390625,
+      "wk52_low": 18276.41015625,
+      "daily_rsi": 74.01916705086512,
+      "weekly_rsi": 65.27980912120782,
+      "realized_vol_21d": 22.238113150285315
+    },
+    "^VIX": {
+      "name": "VIX",
+      "current": 18.920000076293945,
+      "chg_1d_pct": -2.974358583107972,
+      "chg_1w_pct": 5.462650574485095,
+      "chg_1m_pct": -29.79592007169083,
+      "sma_200": 18.22975006580353,
+      "dist_from_sma200_pct": 3.786393165012325,
+      "sma_50": 22.45360019683838,
+      "dist_from_sma50_pct": -15.737343185802288,
+      "wk52_position_pct": 31.001138387753258,
+      "wk52_high": 31.049999237060547,
+      "wk52_low": 13.470000267028809,
+      "daily_rsi": 42.197903809418925,
+      "weekly_rsi": 47.91251311987611,
+      "realized_vol_21d": 119.21349582464336
+    },
+    "DX-Y.NYB": {
+      "name": "DXY (USD Index)",
+      "current": 98.59400177001953,
+      "chg_1d_pct": 0.1869709389930696,
+      "chg_1w_pct": 0.3807784001916392,
+      "chg_1m_pct": -0.840791041527067,
+      "sma_200": 98.51622020721436,
+      "dist_from_sma200_pct": 0.07895305224010496,
+      "sma_50": 98.74288024902344,
+      "dist_from_sma50_pct": -0.15077388732073205,
+      "wk52_position_pct": 42.62119711644484,
+      "wk52_high": 101.79000091552734,
+      "wk52_low": 96.22000122070312,
+      "daily_rsi": 46.777650132134575,
+      "weekly_rsi": 48.735435831632444,
+      "realized_vol_21d": 4.960131068480991
+    }
+  },
+  "macro": {},
+  "sox_90d": [
+    {
+      "ts": "2025-12-11T05:00:00+00:00",
+      "close": 7411.47998046875
+    },
+    {
+      "ts": "2025-12-12T05:00:00+00:00",
+      "close": 7033.56982421875
+    },
+    {
+      "ts": "2025-12-15T05:00:00+00:00",
+      "close": 6990.41015625
+    },
+    {
+      "ts": "2025-12-16T05:00:00+00:00",
+      "close": 6958.43994140625
+    },
+    {
+      "ts": "2025-12-17T05:00:00+00:00",
+      "close": 6695.31005859375
+    },
+    {
+      "ts": "2025-12-18T05:00:00+00:00",
+      "close": 6863.6298828125
+    },
+    {
+      "ts": "2025-12-19T05:00:00+00:00",
+      "close": 7067.8701171875
+    },
+    {
+      "ts": "2025-12-22T05:00:00+00:00",
+      "close": 7145.56982421875
+    },
+    {
+      "ts": "2025-12-23T05:00:00+00:00",
+      "close": 7184.5400390625
+    },
+    {
+      "ts": "2025-12-24T05:00:00+00:00",
+      "close": 7204.3701171875
+    },
+    {
+      "ts": "2025-12-26T05:00:00+00:00",
+      "close": 7207.64013671875
+    },
+    {
+      "ts": "2025-12-29T05:00:00+00:00",
+      "close": 7178.27001953125
+    },
+    {
+      "ts": "2025-12-30T05:00:00+00:00",
+      "close": 7169.10009765625
+    },
+    {
+      "ts": "2025-12-31T05:00:00+00:00",
+      "close": 7083.1298828125
+    },
+    {
+      "ts": "2026-01-02T05:00:00+00:00",
+      "close": 7367.47021484375
+    },
+    {
+      "ts": "2026-01-05T05:00:00+00:00",
+      "close": 7446.4501953125
+    },
+    {
+      "ts": "2026-01-06T05:00:00+00:00",
+      "close": 7650.93017578125
+    },
+    {
+      "ts": "2026-01-07T05:00:00+00:00",
+      "close": 7574.8701171875
+    },
+    {
+      "ts": "2026-01-08T05:00:00+00:00",
+      "close": 7436.10009765625
+    },
+    {
+      "ts": "2026-01-09T05:00:00+00:00",
+      "close": 7638.77978515625
+    },
+    {
+      "ts": "2026-01-12T05:00:00+00:00",
+      "close": 7674.83984375
+    },
+    {
+      "ts": "2026-01-13T05:00:00+00:00",
+      "close": 7747.990234375
+    },
+    {
+      "ts": "2026-01-14T05:00:00+00:00",
+      "close": 7701.47021484375
+    },
+    {
+      "ts": "2026-01-15T05:00:00+00:00",
+      "close": 7837.2998046875
+    },
+    {
+      "ts": "2026-01-16T05:00:00+00:00",
+      "close": 7927.41015625
+    },
+    {
+      "ts": "2026-01-20T05:00:00+00:00",
+      "close": 7794.18994140625
+    },
+    {
+      "ts": "2026-01-21T05:00:00+00:00",
+      "close": 8042.06982421875
+    },
+    {
+      "ts": "2026-01-22T05:00:00+00:00",
+      "close": 8055.169921875
+    },
+    {
+      "ts": "2026-01-23T05:00:00+00:00",
+      "close": 7957.93017578125
+    },
+    {
+      "ts": "2026-01-26T05:00:00+00:00",
+      "close": 7927.0400390625
+    },
+    {
+      "ts": "2026-01-27T05:00:00+00:00",
+      "close": 8117.18017578125
+    },
+    {
+      "ts": "2026-01-28T05:00:00+00:00",
+      "close": 8306.740234375
+    },
+    {
+      "ts": "2026-01-29T05:00:00+00:00",
+      "close": 8320.3896484375
+    },
+    {
+      "ts": "2026-01-30T05:00:00+00:00",
+      "close": 7998.47021484375
+    },
+    {
+      "ts": "2026-02-02T05:00:00+00:00",
+      "close": 8134.490234375
+    },
+    {
+      "ts": "2026-02-03T05:00:00+00:00",
+      "close": 7966.330078125
+    },
+    {
+      "ts": "2026-02-04T05:00:00+00:00",
+      "close": 7619.16015625
+    },
+    {
+      "ts": "2026-02-05T05:00:00+00:00",
+      "close": 7614.64013671875
+    },
+    {
+      "ts": "2026-02-06T05:00:00+00:00",
+      "close": 8048.6201171875
+    },
+    {
+      "ts": "2026-02-09T05:00:00+00:00",
+      "close": 8162.580078125
+    },
+    {
+      "ts": "2026-02-10T05:00:00+00:00",
+      "close": 8107.1298828125
+    },
+    {
+      "ts": "2026-02-11T05:00:00+00:00",
+      "close": 8291.8603515625
+    },
+    {
+      "ts": "2026-02-12T05:00:00+00:00",
+      "close": 8084.7001953125
+    },
+    {
+      "ts": "2026-02-13T05:00:00+00:00",
+      "close": 8137.85986328125
+    },
+    {
+      "ts": "2026-02-17T05:00:00+00:00",
+      "close": 8136.0498046875
+    },
+    {
+      "ts": "2026-02-18T05:00:00+00:00",
+      "close": 8214.349609375
+    },
+    {
+      "ts": "2026-02-19T05:00:00+00:00",
+      "close": 8173.2998046875
+    },
+    {
+      "ts": "2026-02-20T05:00:00+00:00",
+      "close": 8260.419921875
+    },
+    {
+      "ts": "2026-02-23T05:00:00+00:00",
+      "close": 8213.4599609375
+    },
+    {
+      "ts": "2026-02-24T05:00:00+00:00",
+      "close": 8332.33984375
+    },
+    {
+      "ts": "2026-02-25T05:00:00+00:00",
+      "close": 8467.4296875
+    },
+    {
+      "ts": "2026-02-26T05:00:00+00:00",
+      "close": 8197.259765625
+    },
+    {
+      "ts": "2026-02-27T05:00:00+00:00",
+      "close": 8098.3701171875
+    },
+    {
+      "ts": "2026-03-02T05:00:00+00:00",
+      "close": 8137.35986328125
+    },
+    {
+      "ts": "2026-03-03T05:00:00+00:00",
+      "close": 7764.8798828125
+    },
+    {
+      "ts": "2026-03-04T05:00:00+00:00",
+      "close": 7914.47998046875
+    },
+    {
+      "ts": "2026-03-05T05:00:00+00:00",
+      "close": 7821.759765625
+    },
+    {
+      "ts": "2026-03-06T05:00:00+00:00",
+      "close": 7514.740234375
+    },
+    {
+      "ts": "2026-03-09T04:00:00+00:00",
+      "close": 7810.39990234375
+    },
+    {
+      "ts": "2026-03-10T04:00:00+00:00",
+      "close": 7865.1201171875
+    },
+    {
+      "ts": "2026-03-11T04:00:00+00:00",
+      "close": 7914.56982421875
+    },
+    {
+      "ts": "2026-03-12T04:00:00+00:00",
+      "close": 7643.169921875
+    },
+    {
+      "ts": "2026-03-13T04:00:00+00:00",
+      "close": 7646.64013671875
+    },
+    {
+      "ts": "2026-03-16T04:00:00+00:00",
+      "close": 7796.240234375
+    },
+    {
+      "ts": "2026-03-17T04:00:00+00:00",
+      "close": 7836.830078125
+    },
+    {
+      "ts": "2026-03-18T04:00:00+00:00",
+      "close": 7795.1298828125
+    },
+    {
+      "ts": "2026-03-19T04:00:00+00:00",
+      "close": 7863.2998046875
+    },
+    {
+      "ts": "2026-03-20T04:00:00+00:00",
+      "close": 7670.60986328125
+    },
+    {
+      "ts": "2026-03-23T04:00:00+00:00",
+      "close": 7773.1298828125
+    },
+    {
+      "ts": "2026-03-24T04:00:00+00:00",
+      "close": 7872.7099609375
+    },
+    {
+      "ts": "2026-03-25T04:00:00+00:00",
+      "close": 7967.75
+    },
+    {
+      "ts": "2026-03-26T04:00:00+00:00",
+      "close": 7585.8701171875
+    },
+    {
+      "ts": "2026-03-27T04:00:00+00:00",
+      "close": 7457.669921875
+    },
+    {
+      "ts": "2026-03-30T04:00:00+00:00",
+      "close": 7142.330078125
+    },
+    {
+      "ts": "2026-03-31T04:00:00+00:00",
+      "close": 7588.2001953125
+    },
+    {
+      "ts": "2026-04-01T04:00:00+00:00",
+      "close": 7802.31005859375
+    },
+    {
+      "ts": "2026-04-02T04:00:00+00:00",
+      "close": 7833.39013671875
+    },
+    {
+      "ts": "2026-04-06T04:00:00+00:00",
+      "close": 7916.10986328125
+    },
+    {
+      "ts": "2026-04-07T04:00:00+00:00",
+      "close": 8003.8701171875
+    },
+    {
+      "ts": "2026-04-08T04:00:00+00:00",
+      "close": 8510.919921875
+    },
+    {
+      "ts": "2026-04-09T04:00:00+00:00",
+      "close": 8689.5302734375
+    },
+    {
+      "ts": "2026-04-10T04:00:00+00:00",
+      "close": 8889.830078125
+    },
+    {
+      "ts": "2026-04-13T04:00:00+00:00",
+      "close": 9039.51953125
+    },
+    {
+      "ts": "2026-04-14T04:00:00+00:00",
+      "close": 9224.1201171875
+    },
+    {
+      "ts": "2026-04-15T04:00:00+00:00",
+      "close": 9239.2900390625
+    },
+    {
+      "ts": "2026-04-16T04:00:00+00:00",
+      "close": 9329.349609375
+    },
+    {
+      "ts": "2026-04-17T04:00:00+00:00",
+      "close": 9555.8798828125
+    },
+    {
+      "ts": "2026-04-20T04:00:00+00:00",
+      "close": 9599.2099609375
+    },
+    {
+      "ts": "2026-04-21T04:00:00+00:00",
+      "close": 9647.2099609375
+    },
+    {
+      "ts": "2026-04-22T04:00:00+00:00",
+      "close": 9909.2666015625
+    }
+  ],
+  "nvda_90d": [
+    {
+      "ts": "2025-12-11T05:00:00+00:00",
+      "close": 180.92019653320312
+    },
+    {
+      "ts": "2025-12-12T05:00:00+00:00",
+      "close": 175.01052856445312
+    },
+    {
+      "ts": "2025-12-15T05:00:00+00:00",
+      "close": 176.28045654296875
+    },
+    {
+      "ts": "2025-12-16T05:00:00+00:00",
+      "close": 177.71038818359375
+    },
+    {
+      "ts": "2025-12-17T05:00:00+00:00",
+      "close": 170.93075561523438
+    },
+    {
+      "ts": "2025-12-18T05:00:00+00:00",
+      "close": 174.1305694580078
+    },
+    {
+      "ts": "2025-12-19T05:00:00+00:00",
+      "close": 180.98020935058594
+    },
+    {
+      "ts": "2025-12-22T05:00:00+00:00",
+      "close": 183.6800537109375
+    },
+    {
+      "ts": "2025-12-23T05:00:00+00:00",
+      "close": 189.19976806640625
+    },
+    {
+      "ts": "2025-12-24T05:00:00+00:00",
+      "close": 188.59979248046875
+    },
+    {
+      "ts": "2025-12-26T05:00:00+00:00",
+      "close": 190.51968383789062
+    },
+    {
+      "ts": "2025-12-29T05:00:00+00:00",
+      "close": 188.20980834960938
+    },
+    {
+      "ts": "2025-12-30T05:00:00+00:00",
+      "close": 187.52984619140625
+    },
+    {
+      "ts": "2025-12-31T05:00:00+00:00",
+      "close": 186.4899139404297
+    },
+    {
+      "ts": "2026-01-02T05:00:00+00:00",
+      "close": 188.83978271484375
+    },
+    {
+      "ts": "2026-01-05T05:00:00+00:00",
+      "close": 188.1098175048828
+    },
+    {
+      "ts": "2026-01-06T05:00:00+00:00",
+      "close": 187.22987365722656
+    },
+    {
+      "ts": "2026-01-07T05:00:00+00:00",
+      "close": 189.09976196289062
+    },
+    {
+      "ts": "2026-01-08T05:00:00+00:00",
+      "close": 185.0299835205078
+    },
+    {
+      "ts": "2026-01-09T05:00:00+00:00",
+      "close": 184.84999084472656
+    },
+    {
+      "ts": "2026-01-12T05:00:00+00:00",
+      "close": 184.92999267578125
+    },
+    {
+      "ts": "2026-01-13T05:00:00+00:00",
+      "close": 185.79994201660156
+    },
+    {
+      "ts": "2026-01-14T05:00:00+00:00",
+      "close": 183.1300811767578
+    },
+    {
+      "ts": "2026-01-15T05:00:00+00:00",
+      "close": 187.03988647460938
+    },
+    {
+      "ts": "2026-01-16T05:00:00+00:00",
+      "close": 186.21990966796875
+    },
+    {
+      "ts": "2026-01-20T05:00:00+00:00",
+      "close": 178.06036376953125
+    },
+    {
+      "ts": "2026-01-21T05:00:00+00:00",
+      "close": 183.31008911132812
+    },
+    {
+      "ts": "2026-01-22T05:00:00+00:00",
+      "close": 184.82998657226562
+    },
+    {
+      "ts": "2026-01-23T05:00:00+00:00",
+      "close": 187.6598358154297
+    },
+    {
+      "ts": "2026-01-26T05:00:00+00:00",
+      "close": 186.4599151611328
+    },
+    {
+      "ts": "2026-01-27T05:00:00+00:00",
+      "close": 188.50979614257812
+    },
+    {
+      "ts": "2026-01-28T05:00:00+00:00",
+      "close": 191.5096435546875
+    },
+    {
+      "ts": "2026-01-29T05:00:00+00:00",
+      "close": 192.49957275390625
+    },
+    {
+      "ts": "2026-01-30T05:00:00+00:00",
+      "close": 191.11965942382812
+    },
+    {
+      "ts": "2026-02-02T05:00:00+00:00",
+      "close": 185.59996032714844
+    },
+    {
+      "ts": "2026-02-03T05:00:00+00:00",
+      "close": 180.33023071289062
+    },
+    {
+      "ts": "2026-02-04T05:00:00+00:00",
+      "close": 174.18057250976562
+    },
+    {
+      "ts": "2026-02-05T05:00:00+00:00",
+      "close": 171.87069702148438
+    },
+    {
+      "ts": "2026-02-06T05:00:00+00:00",
+      "close": 185.39996337890625
+    },
+    {
+      "ts": "2026-02-09T05:00:00+00:00",
+      "close": 190.0297088623047
+    },
+    {
+      "ts": "2026-02-10T05:00:00+00:00",
+      "close": 188.52978515625
+    },
+    {
+      "ts": "2026-02-11T05:00:00+00:00",
+      "close": 190.0397186279297
+    },
+    {
+      "ts": "2026-02-12T05:00:00+00:00",
+      "close": 186.9298858642578
+    },
+    {
+      "ts": "2026-02-13T05:00:00+00:00",
+      "close": 182.80010986328125
+    },
+    {
+      "ts": "2026-02-17T05:00:00+00:00",
+      "close": 184.95999145507812
+    },
+    {
+      "ts": "2026-02-18T05:00:00+00:00",
+      "close": 187.96981811523438
+    },
+    {
+      "ts": "2026-02-19T05:00:00+00:00",
+      "close": 187.88983154296875
+    },
+    {
+      "ts": "2026-02-20T05:00:00+00:00",
+      "close": 189.8097381591797
+    },
+    {
+      "ts": "2026-02-23T05:00:00+00:00",
+      "close": 191.53964233398438
+    },
+    {
+      "ts": "2026-02-24T05:00:00+00:00",
+      "close": 192.83956909179688
+    },
+    {
+      "ts": "2026-02-25T05:00:00+00:00",
+      "close": 195.54940795898438
+    },
+    {
+      "ts": "2026-02-26T05:00:00+00:00",
+      "close": 184.87998962402344
+    },
+    {
+      "ts": "2026-02-27T05:00:00+00:00",
+      "close": 177.180419921875
+    },
+    {
+      "ts": "2026-03-02T05:00:00+00:00",
+      "close": 182.47012329101562
+    },
+    {
+      "ts": "2026-03-03T05:00:00+00:00",
+      "close": 180.04025268554688
+    },
+    {
+      "ts": "2026-03-04T05:00:00+00:00",
+      "close": 183.03009033203125
+    },
+    {
+      "ts": "2026-03-05T05:00:00+00:00",
+      "close": 183.330078125
+    },
+    {
+      "ts": "2026-03-06T05:00:00+00:00",
+      "close": 177.8103790283203
+    },
+    {
+      "ts": "2026-03-09T04:00:00+00:00",
+      "close": 182.64010620117188
+    },
+    {
+      "ts": "2026-03-10T04:00:00+00:00",
+      "close": 184.760009765625
+    },
+    {
+      "ts": "2026-03-11T04:00:00+00:00",
+      "close": 186.02999877929688
+    },
+    {
+      "ts": "2026-03-12T04:00:00+00:00",
+      "close": 183.13999938964844
+    },
+    {
+      "ts": "2026-03-13T04:00:00+00:00",
+      "close": 180.25
+    },
+    {
+      "ts": "2026-03-16T04:00:00+00:00",
+      "close": 183.22000122070312
+    },
+    {
+      "ts": "2026-03-17T04:00:00+00:00",
+      "close": 181.92999267578125
+    },
+    {
+      "ts": "2026-03-18T04:00:00+00:00",
+      "close": 180.39999389648438
+    },
+    {
+      "ts": "2026-03-19T04:00:00+00:00",
+      "close": 178.55999755859375
+    },
+    {
+      "ts": "2026-03-20T04:00:00+00:00",
+      "close": 172.6999969482422
+    },
+    {
+      "ts": "2026-03-23T04:00:00+00:00",
+      "close": 175.63999938964844
+    },
+    {
+      "ts": "2026-03-24T04:00:00+00:00",
+      "close": 175.1999969482422
+    },
+    {
+      "ts": "2026-03-25T04:00:00+00:00",
+      "close": 178.67999267578125
+    },
+    {
+      "ts": "2026-03-26T04:00:00+00:00",
+      "close": 171.24000549316406
+    },
+    {
+      "ts": "2026-03-27T04:00:00+00:00",
+      "close": 167.52000427246094
+    },
+    {
+      "ts": "2026-03-30T04:00:00+00:00",
+      "close": 165.1699981689453
+    },
+    {
+      "ts": "2026-03-31T04:00:00+00:00",
+      "close": 174.39999389648438
+    },
+    {
+      "ts": "2026-04-01T04:00:00+00:00",
+      "close": 175.75
+    },
+    {
+      "ts": "2026-04-02T04:00:00+00:00",
+      "close": 177.38999938964844
+    },
+    {
+      "ts": "2026-04-06T04:00:00+00:00",
+      "close": 177.63999938964844
+    },
+    {
+      "ts": "2026-04-07T04:00:00+00:00",
+      "close": 178.10000610351562
+    },
+    {
+      "ts": "2026-04-08T04:00:00+00:00",
+      "close": 182.0800018310547
+    },
+    {
+      "ts": "2026-04-09T04:00:00+00:00",
+      "close": 183.91000366210938
+    },
+    {
+      "ts": "2026-04-10T04:00:00+00:00",
+      "close": 188.6300048828125
+    },
+    {
+      "ts": "2026-04-13T04:00:00+00:00",
+      "close": 189.30999755859375
+    },
+    {
+      "ts": "2026-04-14T04:00:00+00:00",
+      "close": 196.50999450683594
+    },
+    {
+      "ts": "2026-04-15T04:00:00+00:00",
+      "close": 198.8699951171875
+    },
+    {
+      "ts": "2026-04-16T04:00:00+00:00",
+      "close": 198.35000610351562
+    },
+    {
+      "ts": "2026-04-17T04:00:00+00:00",
+      "close": 201.67999267578125
+    },
+    {
+      "ts": "2026-04-20T04:00:00+00:00",
+      "close": 202.05999755859375
+    },
+    {
+      "ts": "2026-04-21T04:00:00+00:00",
+      "close": 199.8800048828125
+    },
+    {
+      "ts": "2026-04-22T04:00:00+00:00",
+      "close": 202.5
+    }
+  ]
+}

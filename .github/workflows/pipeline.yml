@@ -1,0 +1,109 @@
+name: pipeline
+
+# AI Semiconductor Cycle Intelligence pipeline.
+# Schedule:
+#   - Every 4 hours during US market hours (NYSE 14:30-21:00 UTC)
+#   - 22:00 UTC daily (07:00 KST) — main daily report after US close
+#
+# Stocks update during market hours, so frequent runs catch real-time changes.
+
+on:
+  schedule:
+    - cron: "30 14 * * 1-5"   # US market open (09:30 ET / 14:30 UTC)
+    - cron: "30 17 * * 1-5"   # US market mid-day
+    - cron: "5 21 * * 1-5"    # US market close (16:00 ET / 21:00 UTC)
+    - cron: "0 22 * * *"      # daily 07:00 KST report (after US close)
+  workflow_dispatch:
+
+concurrency:
+  group: asci-pipeline
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Resolve Pages URL
+        run: |
+          PAGES_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          echo "PAGES_URL=$PAGES_URL" >> $GITHUB_ENV
+
+      - name: Run pipeline
+        env:
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FRED_API_KEY:     ${{ secrets.FRED_API_KEY }}
+          PAGES_URL:        ${{ env.PAGES_URL }}
+          TZ: "Asia/Seoul"
+        run: python scripts/run_pipeline.py
+
+      - name: Commit JSON artifacts
+        run: |
+          git config user.name  "asci-bot[bot]"
+          git config user.email "asci-bot[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "No data changes to commit"
+          else
+            git commit -m "chore: pipeline update $(date -u '+%Y-%m-%dT%H:%MZ')"
+            git push
+          fi
+
+      - name: Stage data JSON for Pages
+        run: |
+          mkdir -p docs/site/data
+          cp -r data/* docs/site/data/ 2>/dev/null || true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs/site
+          name: github-pages
+
+      - name: Notify on failure
+        if: failure()
+        env:
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python - <<'EOF'
+          import os, requests
+          t = os.environ.get("TELEGRAM_TOKEN", "")
+          c = os.environ.get("TELEGRAM_CHAT_ID", "")
+          if t and c:
+              requests.post(
+                  f"https://api.telegram.org/bot{t}/sendMessage",
+                  json={"chat_id": c,
+                        "text": "❌ ASCI pipeline failed.\nCheck: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"},
+                  timeout=10)
+          EOF
+
+  deploy:
+    needs: ingest
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

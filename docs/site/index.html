@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Semiconductor Cycle Intelligence</title>
+<meta name="description" content="Multi-factor AI/semiconductor cycle positioning. Updated automatically.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
+<script src="https://unpkg.com/recharts@2/umd/Recharts.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    background: #0a0e1a;
+    color: #e5e7eb;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    margin: 0;
+  }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeIn 0.4s ease-out; }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .shimmer {
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.02) 0%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.02) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #0a0e1a; }
+  ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #374151; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="react">
+const { useState, useEffect, useMemo } = React;
+const {
+  LineChart, Line, AreaChart, Area, BarChart, Bar,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine, Cell,
+} = Recharts;
+
+const DATA_BASE = "./data/";
+
+const COLORS = {
+  bg: '#0a0e1a', bgCard: '#111827', border: '#1f2937',
+  text: '#e5e7eb', textDim: '#9ca3af', textMuted: '#6b7280',
+  capitulation: '#0a4d68', recovery: '#3a8891', expansion: '#f6c945',
+  lateBull: '#e76f51', euphoria: '#c1121f',
+  green: '#10b981', red: '#ef4444', amber: '#f59e0b',
+  blue: '#3b82f6', purple: '#a855f7',
+};
+
+const PHASES = [
+  { name: 'Capitulation', range: [0, 20],   color: COLORS.capitulation, emoji: '🧊' },
+  { name: 'Recovery',     range: [20, 40],  color: COLORS.recovery,     emoji: '🌱' },
+  { name: 'Expansion',    range: [40, 60],  color: COLORS.expansion,    emoji: '📈' },
+  { name: 'Late Bull',    range: [60, 80],  color: COLORS.lateBull,     emoji: '🔥' },
+  { name: 'Euphoria',     range: [80, 100], color: COLORS.euphoria,     emoji: '🚨' },
+];
+
+function phaseFor(score) {
+  if (score == null || isNaN(score)) return PHASES[2];
+  return PHASES.find(p => score >= p.range[0] && score < p.range[1]) || PHASES[4];
+}
+
+async function fetchJSON(path) {
+  const url = DATA_BASE + path + "?t=" + Date.now();
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${path}: ${r.status}`);
+  return await r.json();
+}
+
+function Card({ children, className = '', title, subtitle, icon }) {
+  return (
+    <div className={`rounded-2xl p-5 border ${className}`}
+      style={{ background: COLORS.bgCard, borderColor: COLORS.border }}>
+      {(title || icon) && (
+        <div className="flex items-center gap-2 mb-3">
+          {icon && <span className="text-sm">{icon}</span>}
+          {title && <h3 className="text-xs font-medium tracking-widest uppercase"
+            style={{ color: COLORS.textDim }}>{title}</h3>}
+          {subtitle && <span className="ml-auto text-xs font-mono"
+            style={{ color: COLORS.textMuted }}>{subtitle}</span>}
+        </div>
+      )}
+      {children}
+    </div>
+  );
+}
+
+function CycleGauge({ score }) {
+  const phase = phaseFor(score);
+  const angle = ((score ?? 0) / 100) * 180 - 90;
+  const r = 120, cx = 150, cy = 140;
+  const needleX = cx + r * Math.cos((angle - 90) * Math.PI / 180);
+  const needleY = cy + r * Math.sin((angle - 90) * Math.PI / 180);
+  const dashArray = `${((score ?? 0)/100) * 377} 377`;
+
+  return (
+    <div className="flex flex-col items-center fade-in">
+      <svg width="300" height="180" viewBox="0 0 300 180">
+        <defs>
+          <linearGradient id="cycleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor={COLORS.capitulation} />
+            <stop offset="25%" stopColor={COLORS.recovery} />
+            <stop offset="50%" stopColor={COLORS.expansion} />
+            <stop offset="75%" stopColor={COLORS.lateBull} />
+            <stop offset="100%" stopColor={COLORS.euphoria} />
+          </linearGradient>
+        </defs>
+        <path d={`M 30 140 A ${r} ${r} 0 0 1 270 140`}
+          fill="none" stroke={COLORS.border} strokeWidth="18" strokeLinecap="round" />
+        <path d={`M 30 140 A ${r} ${r} 0 0 1 270 140`}
+          fill="none" stroke="url(#cycleGrad)" strokeWidth="14" strokeLinecap="round"
+          strokeDasharray={dashArray} />
+        <line x1={cx} y1={cy} x2={needleX} y2={needleY}
+          stroke={COLORS.text} strokeWidth="3" strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r="8" fill={phase.color} />
+        <circle cx={cx} cy={cy} r="4" fill={COLORS.bg} />
+        <text x="30" y="165" fill={COLORS.textMuted} fontSize="10" fontFamily="JetBrains Mono">0</text>
+        <text x="150" y="35" fill={COLORS.textMuted} fontSize="10" fontFamily="JetBrains Mono" textAnchor="middle">50</text>
+        <text x="268" y="165" fill={COLORS.textMuted} fontSize="10" fontFamily="JetBrains Mono">100</text>
+      </svg>
+      <div className="text-center -mt-2">
+        <div className="text-6xl font-extrabold tabular-nums tracking-tight font-mono"
+          style={{ color: phase.color }}>
+          {score != null ? Math.round(score) : '--'}
+        </div>
+        <div className="text-xs tracking-widest uppercase mt-1" style={{ color: COLORS.textDim }}>
+          AI Semi Cycle Score
+        </div>
+        <div className="flex items-center justify-center gap-2 mt-3">
+          <span className="text-2xl">{phase.emoji}</span>
+          <div className="text-base font-semibold" style={{ color: phase.color }}>{phase.name}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DimensionCard({ name, score, indicators = [] }) {
+  const phase = score != null ? phaseFor(score) : null;
+  const color = phase?.color || COLORS.textMuted;
+  return (
+    <div className="rounded-xl p-3 border"
+      style={{ background: COLORS.bgCard, borderColor: COLORS.border }}>
+      <div className="text-[10px] uppercase tracking-widest mb-1"
+        style={{ color: COLORS.textDim }}>{name}</div>
+      <div className="text-2xl font-bold font-mono tabular-nums"
+        style={{ color }}>
+        {score != null ? Math.round(score) : '—'}
+      </div>
+      <div className="mt-2 space-y-1">
+        {indicators.slice(0, 4).map((ind, i) => (
+          <div key={i} className="flex items-center justify-between text-[10px]">
+            <span className="truncate mr-2" style={{ color: COLORS.textMuted }}>
+              {ind.metric.replace(/_/g, ' ').replace(/pct$/i, '%').slice(0, 18)}
+            </span>
+            <span className="font-mono tabular-nums" style={{ color: COLORS.text }}>
+              {ind.raw != null ? (Math.abs(ind.raw) < 10 ? ind.raw.toFixed(2) : ind.raw.toFixed(1)) : '—'}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function StockTable({ leaders }) {
+  const rows = Object.entries(leaders || {}).map(([sym, d]) => ({
+    sym, name: d.name,
+    price: d.current, chg: d.chg_1d_pct,
+    pe: d.forwardPE || d.trailingPE,
+    wk52: d.wk52_position_pct,
+    rsi: d.daily_rsi,
+    mcap: d.marketCap,
+  })).sort((a, b) => (b.mcap || 0) - (a.mcap || 0));
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead>
+          <tr style={{ borderBottom: `1px solid ${COLORS.border}` }}>
+            {['Symbol', 'Name', 'Price', '1D%', 'P/E', '52W Pos', 'RSI', 'MCap'].map((h, i) => (
+              <th key={i} className="text-left py-2 px-2 text-[10px] uppercase tracking-widest"
+                style={{ color: COLORS.textDim, textAlign: i >= 2 ? 'right' : 'left' }}>
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i} className="hover:bg-gray-900/30"
+              style={{ borderBottom: `1px solid ${COLORS.border}` }}>
+              <td className="py-2 px-2 font-bold" style={{ color: COLORS.text }}>{r.sym}</td>
+              <td className="py-2 px-2 text-xs" style={{ color: COLORS.textDim }}>{r.name}</td>
+              <td className="py-2 px-2 text-right font-mono tabular-nums"
+                style={{ color: COLORS.text }}>
+                ${r.price ? r.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—'}
+              </td>
+              <td className="py-2 px-2 text-right font-mono tabular-nums"
+                style={{ color: r.chg >= 0 ? COLORS.green : COLORS.red }}>
+                {r.chg != null ? `${r.chg >= 0 ? '+' : ''}${r.chg.toFixed(2)}%` : '—'}
+              </td>
+              <td className="py-2 px-2 text-right font-mono tabular-nums"
+                style={{ color: COLORS.textDim }}>
+                {r.pe ? r.pe.toFixed(1) : '—'}
+              </td>
+              <td className="py-2 px-2 text-right">
+                {r.wk52 != null && (
+                  <div className="inline-block w-16 h-2 rounded-full relative"
+                    style={{ background: COLORS.border }}>
+                    <div className="absolute top-0 h-2 rounded-full"
+                      style={{
+                        left: 0, width: `${r.wk52}%`,
+                        background: r.wk52 > 80 ? COLORS.lateBull : r.wk52 > 50 ? COLORS.expansion : COLORS.recovery
+                      }} />
+                  </div>
+                )}
+              </td>
+              <td className="py-2 px-2 text-right font-mono tabular-nums text-xs"
+                style={{ color: r.rsi > 70 ? COLORS.lateBull : (r.rsi < 30 ? COLORS.recovery : COLORS.textDim) }}>
+                {r.rsi ? r.rsi.toFixed(0) : '—'}
+              </td>
+              <td className="py-2 px-2 text-right font-mono tabular-nums text-xs"
+                style={{ color: COLORS.textDim }}>
+                {r.mcap ? `$${(r.mcap/1e9).toFixed(0)}B` : '—'}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function IndicatorHeatmap({ indicators }) {
+  return (
+    <div className="space-y-1">
+      {indicators.map((ind, i) => {
+        const score = ind.score;
+        const phase = score != null ? phaseFor(score) : null;
+        return (
+          <div key={i} className="flex items-center gap-3 py-2"
+            style={{ borderBottom: `1px solid ${COLORS.border}` }}>
+            <div className="w-44 text-xs font-medium truncate" style={{ color: COLORS.text }}>
+              {ind.metric.replace(/_/g, ' ').replace(/pct/g, '%')}
+            </div>
+            <div className="w-20 text-xs font-mono tabular-nums" style={{ color: COLORS.textDim }}>
+              {ind.raw != null ? (Math.abs(ind.raw) < 100 ? ind.raw.toFixed(2) : ind.raw.toFixed(0)) : 'N/A'}
+            </div>
+            <div className="flex-1 relative h-6 rounded-md overflow-hidden"
+              style={{ background: COLORS.border }}>
+              {score != null && (
+                <>
+                  <div className="absolute inset-y-0 left-0 transition-all"
+                    style={{ width: `${score}%`,
+                      background: `linear-gradient(90deg, ${COLORS.capitulation} 0%, ${COLORS.recovery} 25%, ${COLORS.expansion} 50%, ${COLORS.lateBull} 75%, ${COLORS.euphoria} 100%)` }} />
+                  <div className="absolute top-0 bottom-0 w-0.5 bg-white"
+                    style={{ left: `${score}%`, boxShadow: '0 0 6px rgba(255,255,255,0.8)' }} />
+                </>
+              )}
+            </div>
+            <div className="w-12 text-right text-xs font-mono font-semibold tabular-nums"
+              style={{ color: phase?.color || COLORS.textMuted }}>
+              {score != null ? Math.round(score) : '—'}
+            </div>
+            <div className="w-20 text-[10px] text-right truncate" style={{ color: COLORS.textDim }}>
+              {ind.dimension}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ASCSTimeline({ history }) {
+  const data = useMemo(() => history
+    .filter(h => h.ascs != null)
+    .map(h => ({ ts: h.ts.slice(0,10), ascs: h.ascs, sox: h.sox, vix: h.vix }))
+  , [history]);
+
+  if (data.length < 2) {
+    return (
+      <div className="h-64 flex items-center justify-center text-sm"
+        style={{ color: COLORS.textMuted }}>
+        Need ≥2 daily snapshots — come back tomorrow!
+      </div>
+    );
+  }
+
+  return (
+    <div className="h-64">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+          <defs>
+            <linearGradient id="ascsGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={COLORS.lateBull} stopOpacity={0.5} />
+              <stop offset="100%" stopColor={COLORS.lateBull} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} opacity={0.3} />
+          <XAxis dataKey="ts" tick={{ fill: COLORS.textMuted, fontSize: 10 }}
+            tickFormatter={(v) => v.slice(5)} interval="preserveStartEnd" />
+          <YAxis domain={[0, 100]} tick={{ fill: COLORS.textMuted, fontSize: 10 }} />
+          <Tooltip contentStyle={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`,
+            borderRadius: 8, fontSize: 12 }}
+            labelStyle={{ color: COLORS.textDim }} />
+          <ReferenceLine y={80} stroke={COLORS.euphoria} strokeDasharray="3 3" label={{ value: 'Euphoria', position: 'right', fill: COLORS.euphoria, fontSize: 10 }} />
+          <ReferenceLine y={20} stroke={COLORS.capitulation} strokeDasharray="3 3" label={{ value: 'Capitulation', position: 'right', fill: COLORS.capitulation, fontSize: 10 }} />
+          <Area type="monotone" dataKey="ascs" stroke={COLORS.lateBull} strokeWidth={2}
+            fill="url(#ascsGrad)" />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function PriceChart({ data, label, color = COLORS.lateBull }) {
+  if (!data || data.length === 0) return (
+    <div className="h-48 flex items-center justify-center text-sm"
+      style={{ color: COLORS.textMuted }}>Loading {label}...</div>
+  );
+  const chartData = data.map(d => ({ ts: d.ts.slice(5, 10), close: d.close }));
+  return (
+    <div className="h-48">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
+          <defs>
+            <linearGradient id={`grad-${label}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={color} stopOpacity={0.3} />
+              <stop offset="100%" stopColor={color} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} opacity={0.3} />
+          <XAxis dataKey="ts" tick={{ fill: COLORS.textMuted, fontSize: 9 }} interval="preserveStartEnd" />
+          <YAxis tick={{ fill: COLORS.textMuted, fontSize: 9 }}
+            tickFormatter={(v) => v >= 1000 ? `${(v/1000).toFixed(1)}k` : v.toFixed(0)} />
+          <Tooltip contentStyle={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`,
+            borderRadius: 8, fontSize: 11 }}
+            formatter={(v) => [`$${v.toFixed(2)}`, label]} />
+          <Area type="monotone" dataKey="close" stroke={color} strokeWidth={2}
+            fill={`url(#grad-${label})`} />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function HyperscalerCapex({ data }) {
+  const rows = Object.entries(data || {})
+    .map(([sym, d]) => ({ sym, name: d.name, capex_yoy: d.capex_yoy_pct, capex_latest: d.capex_latest }))
+    .filter(r => r.capex_yoy != null)
+    .sort((a, b) => b.capex_yoy - a.capex_yoy);
+  if (rows.length === 0) {
+    return <div className="text-sm" style={{color: COLORS.textMuted}}>No capex data available</div>;
+  }
+  return (
+    <div className="h-48">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={rows} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={COLORS.border} opacity={0.3} />
+          <XAxis dataKey="sym" tick={{ fill: COLORS.textMuted, fontSize: 11 }} />
+          <YAxis tick={{ fill: COLORS.textMuted, fontSize: 9 }} tickFormatter={(v) => `${v.toFixed(0)}%`} />
+          <Tooltip contentStyle={{ background: COLORS.bgCard, border: `1px solid ${COLORS.border}`, borderRadius: 8, fontSize: 12 }}
+            formatter={(v, n, p) => [`${v.toFixed(1)}% YoY`, p.payload.name]} />
+          <Bar dataKey="capex_yoy" radius={[4, 4, 0, 0]}>
+            {rows.map((r, i) => (
+              <Cell key={i} fill={r.capex_yoy > 50 ? COLORS.lateBull : r.capex_yoy > 0 ? COLORS.expansion : COLORS.recovery} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function Dashboard() {
+  const [latest, setLatest] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const [l, h] = await Promise.all([
+          fetchJSON('latest.json'),
+          fetchJSON('history.json').catch(() => []),
+        ]);
+        setLatest(l);
+        setHistory(Array.isArray(h) ? h : (h.snapshots || []));
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen p-6 flex items-center justify-center">
+        <div className="shimmer rounded-xl w-96 h-64 border" style={{ borderColor: COLORS.border }} />
+      </div>
+    );
+  }
+
+  if (error || !latest) {
+    return (
+      <div className="min-h-screen p-6 flex flex-col items-center justify-center">
+        <div className="text-xl mb-2">⚠️ Failed to load data</div>
+        <div className="text-sm" style={{ color: COLORS.textMuted }}>{error}</div>
+      </div>
+    );
+  }
+
+  const ascs = latest.ascs;
+  const indices = latest.indices || {};
+  const leaders = latest.leaders || {};
+  const hyperscalers = latest.hyperscalers || {};
+  const sox = indices['^SOX'] || {};
+  const nvda = leaders['NVDA'] || {};
+  const vix = indices['^VIX'] || {};
+  const generated = new Date(latest.generated_at);
+
+  const byDim = {};
+  for (const ind of ascs.indicators || []) {
+    if (!byDim[ind.dimension]) byDim[ind.dimension] = [];
+    byDim[ind.dimension].push(ind);
+  }
+
+  return (
+    <div className="min-h-screen p-4 md:p-6">
+      <div className="max-w-[1400px] mx-auto">
+        {/* Header */}
+        <header className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-3">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+              AI Semiconductor <span style={{ color: ascs.color }}>Cycle</span>
+            </h1>
+            <p className="text-xs mt-1" style={{ color: COLORS.textMuted }}>
+              Multi-factor cycle positioning · Updated automatically via GitHub Actions
+            </p>
+          </div>
+          <div className="flex items-center gap-3 text-xs font-mono" style={{ color: COLORS.textDim }}>
+            <div>
+              <div style={{ color: COLORS.textMuted }}>Last Updated</div>
+              <div>{generated.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} KST</div>
+            </div>
+          </div>
+        </header>
+
+        {/* Hero */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+          <Card className="lg:col-span-1" title="ASCS Score" icon="🤖" subtitle="weighted 6-dim">
+            <CycleGauge score={ascs.composite} />
+          </Card>
+
+          <Card className="lg:col-span-1" title="NVDA · 90 Day" icon="🟢"
+            subtitle={nvda.current ? `$${nvda.current.toFixed(2)}` : ''}>
+            <div className="flex items-baseline gap-4 mb-2">
+              <div>
+                <div className="text-3xl font-bold font-mono tabular-nums">
+                  ${nvda.current ? nvda.current.toFixed(2) : '—'}
+                </div>
+                {nvda.chg_1d_pct != null && (
+                  <div className="text-sm font-mono"
+                    style={{ color: nvda.chg_1d_pct >= 0 ? COLORS.green : COLORS.red }}>
+                    {nvda.chg_1d_pct >= 0 ? '▲' : '▼'} {nvda.chg_1d_pct.toFixed(2)}% (1D)
+                  </div>
+                )}
+              </div>
+              <div className="text-xs font-mono" style={{ color: COLORS.textDim }}>
+                {nvda.forwardPE && <div>Fwd P/E: <span style={{color: COLORS.text}}>{nvda.forwardPE.toFixed(1)}</span></div>}
+                {nvda.wk52_position_pct != null && (
+                  <div>52w pos: <span style={{color: nvda.wk52_position_pct > 80 ? COLORS.lateBull : COLORS.text}}>
+                    {nvda.wk52_position_pct.toFixed(0)}%</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <PriceChart data={latest.nvda_90d} label="NVDA" color={COLORS.green} />
+          </Card>
+
+          <Card className="lg:col-span-1" title="SOX · 90 Day" icon="📊"
+            subtitle={sox.current ? `${sox.current.toFixed(0)}` : ''}>
+            <div className="flex items-baseline gap-4 mb-2">
+              <div>
+                <div className="text-3xl font-bold font-mono tabular-nums">
+                  {sox.current ? sox.current.toFixed(0) : '—'}
+                </div>
+                {sox.chg_1d_pct != null && (
+                  <div className="text-sm font-mono"
+                    style={{ color: sox.chg_1d_pct >= 0 ? COLORS.green : COLORS.red }}>
+                    {sox.chg_1d_pct >= 0 ? '▲' : '▼'} {sox.chg_1d_pct.toFixed(2)}% (1D)
+                  </div>
+                )}
+              </div>
+              <div className="text-xs font-mono" style={{ color: COLORS.textDim }}>
+                {sox.dist_from_sma200_pct != null && (
+                  <div>vs 200D: <span style={{color: sox.dist_from_sma200_pct > 20 ? COLORS.lateBull : COLORS.text}}>
+                    {sox.dist_from_sma200_pct >= 0 ? '+' : ''}{sox.dist_from_sma200_pct.toFixed(1)}%</span>
+                  </div>
+                )}
+                {sox.weekly_rsi && (
+                  <div>W-RSI: <span style={{color: sox.weekly_rsi > 70 ? COLORS.lateBull : COLORS.text}}>
+                    {sox.weekly_rsi.toFixed(0)}</span>
+                  </div>
+                )}
+                {vix.current && <div>VIX: <span style={{color: COLORS.text}}>{vix.current.toFixed(1)}</span></div>}
+              </div>
+            </div>
+            <PriceChart data={latest.sox_90d} label="SOX" color={COLORS.lateBull} />
+          </Card>
+        </div>
+
+        {/* 6 Dimensions */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+          {['valuation', 'earnings', 'capital', 'sentiment', 'macro', 'technical'].map(d => (
+            <DimensionCard key={d} name={d} score={ascs.dimensions[d]}
+              indicators={byDim[d] || []} />
+          ))}
+        </div>
+
+        {/* Stocks Table */}
+        <Card title="Semiconductor Leaders" icon="🏆"
+          subtitle={`${Object.keys(leaders).length} tickers`} className="mb-6">
+          <StockTable leaders={leaders} />
+        </Card>
+
+        {/* Hyperscaler Capex + ASCS Timeline */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+          <Card title="Hyperscaler Capex YoY" icon="💰"
+            subtitle="capital cycle driver">
+            <HyperscalerCapex data={hyperscalers} />
+          </Card>
+          <Card title="ASCS Timeline" icon="📈"
+            subtitle={`${history.length} snapshots`}>
+            <ASCSTimeline history={history} />
+          </Card>
+        </div>
+
+        {/* Indicator Heatmap */}
+        <Card title="All Indicators" icon="🎯"
+          subtitle="0=capitulation · 100=euphoria" className="mb-6">
+          <IndicatorHeatmap indicators={ascs.indicators} />
+        </Card>
+
+        {/* Footer */}
+        <footer className="mt-8 pt-6 border-t text-xs"
+          style={{ borderColor: COLORS.border, color: COLORS.textMuted }}>
+          <div className="flex flex-wrap gap-4 justify-between items-center">
+            <div>
+              Data sources: Yahoo Finance · FRED St. Louis Fed
+            </div>
+            <div className="font-mono">
+              ASCS v1.0 · Generated {generated.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} KST
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Dashboard />);
+</script>
+</body>
+</html>

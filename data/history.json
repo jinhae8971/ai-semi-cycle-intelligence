@@ -1,0 +1,37 @@
+[
+  {
+    "ts": "2026-04-22T21:57:33.656175+00:00",
+    "ascs": 72.77,
+    "phase": "Late Bull",
+    "dimensions": {
+      "valuation": 43.93,
+      "earnings": 82.11,
+      "capital": 73.57,
+      "sentiment": 81.35,
+      "macro": null,
+      "technical": 98.99
+    },
+    "indicators_raw": {
+      "nvda_forward_pe": 18.01733,
+      "nvda_price_to_sales": 22.792479,
+      "nvda_revenue_growth_pct": 73.2,
+      "nvda_wk52_pos_pct": 95.8231632127291,
+      "nvda_short_pct": 1.21,
+      "sox_above_sma200_pct": 40.681314691817725,
+      "sox_dist_sma200_pct": 40.681314691817725,
+      "sox_weekly_rsi": 78.32138660378868,
+      "sox_daily_rsi": 80.49351935209597,
+      "sox_avg_forward_pe": 28.589976060000005,
+      "sox_avg_pe_pctl": 50.272654727272744,
+      "top10_mcap_to_gdp_pct": 39.22005060266667,
+      "semi_avg_revenue_growth_pct": 40.45,
+      "hyperscaler_capex_yoy_pct": 94.81365068614464,
+      "memory_capex_yoy_pct": 89.08895778678749,
+      "semi_capex_to_revenue_pct": 18.370711679247755,
+      "vix": 18.920000076293945
+    },
+    "nvda_price": 202.5,
+    "sox": 9909.2666015625,
+    "vix": 18.920000076293945
+  }
+]
