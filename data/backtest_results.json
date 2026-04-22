@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-04-22T22:12:33.929969+00:00",
+  "backtest_window": {
+    "start": "2017-01-03",
+    "end": "2026-04-22",
+    "n_days": 2337
+  },
+  "indicators_used": [
+    "vix",
+    "sox_above_sma200_pct",
+    "kospi_above_sma200_pct",
+    "sox_weekly_rsi",
+    "sox_daily_rsi",
+    "nvda_wk52_pos_pct",
+    "sox_dist_sma200_pct",
+    "kospi_weekly_rsi",
+    "samsung_wk52_pos_pct",
+    "skhynix_wk52_pos_pct"
+  ],
+  "event_results": [
+    {
+      "name": "2018 Trade War Bottom",
+      "target_date": "2018-12-24",
+      "actual_date": "2018-12-24",
+      "expected_phase": "Capitulation",
+      "expected_score": "<25",
+      "actual_score": 7.2,
+      "actual_phase": "Capitulation",
+      "match": "\u2705",
+      "context": "SOX fell ~30% from Sep peak on US-China trade tensions. Bottom of cycle."
+    },
+    {
+      "name": "2020 COVID Crash",
+      "target_date": "2020-03-23",
+      "actual_date": "2020-03-23",
+      "expected_phase": "Capitulation",
+      "expected_score": "<20",
+      "actual_score": 7.9,
+      "actual_phase": "Capitulation",
+      "match": "\u2705",
+      "context": "Pandemic bottom. SOX -36% from Feb high in 4 weeks."
+    },
+    {
+      "name": "2021 Cycle Top",
+      "target_date": "2021-12-27",
+      "actual_date": "2021-12-27",
+      "expected_phase": "Late Bull / Euphoria",
+      "expected_score": ">70",
+      "actual_score": 69.4,
+      "actual_phase": "Late Bull",
+      "match": "\u2705",
+      "context": "Pre-2022 crash high. Memory boom + WFH chip shortage peak."
+    },
+    {
+      "name": "2022 Inflation Bottom",
+      "target_date": "2022-10-13",
+      "actual_date": "2022-10-13",
+      "expected_phase": "Capitulation",
+      "expected_score": "<25",
+      "actual_score": 6.0,
+      "actual_phase": "Capitulation",
+      "match": "\u2705",
+      "context": "Fed hiking + memory glut + crypto contagion. SOX -40% from peak."
+    },
+    {
+      "name": "ChatGPT Launch (Nov 2022)",
+      "target_date": "2022-11-30",
+      "actual_date": "2022-11-30",
+      "expected_phase": "Recovery",
+      "expected_score": "20-40",
+      "actual_score": 40.3,
+      "actual_phase": "Expansion",
+      "match": "\u2705",
+      "context": "ChatGPT release sparks AI infrastructure cycle."
+    },
+    {
+      "name": "2024 Mid-Year",
+      "target_date": "2024-06-28",
+      "actual_date": "2024-06-28",
+      "expected_phase": "Late Bull",
+      "expected_score": "60-80",
+      "actual_score": 82.7,
+      "actual_phase": "Euphoria",
+      "match": "\u2705",
+      "context": "NVDA hit $140 on AI hype. Hindsight: top approaching."
+    },
+    {
+      "name": "2025 Q4 ATH",
+      "target_date": "2025-10-06",
+      "actual_date": "2025-10-06",
+      "expected_phase": "Late Bull / Euphoria",
+      "expected_score": ">75",
+      "actual_score": 92.5,
+      "actual_phase": "Euphoria",
+      "match": "\u2705",
+      "context": "Cycle peak before 2026 Q1 correction."
+    },
+    {
+      "name": "Today (Live)",
+      "target_date": "2026-04-22",
+      "actual_date": "2026-04-22",
+      "expected_phase": "Late Bull",
+      "expected_score": "70-80",
+      "actual_score": 90.8,
+      "actual_phase": "Euphoria",
+      "match": "\u274c",
+      "context": "Current pipeline live result for comparison."
+    }
+  ],
+  "ascs_stats": {
+    "min": 4.2414492463113875,
+    "max": 99.0936704218324,
+    "mean": 60.99526034940845,
+    "median": 63.28265514347641,
+    "std": 21.711651833723753
+  },
+  "phase_distribution_pct": {
+    "Capitulation": 5.477107402652974,
+    "Recovery": 11.895592640136927,
+    "Expansion": 26.44415917843389,
+    "Late Bull": 32.90543431750107,
+    "Euphoria": 23.277706461275137
+  }
+}

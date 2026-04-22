@@ -54,8 +54,8 @@ def env(name: str, default: str = "") -> str:
 # Universe — companies & indices we track
 # ══════════════════════════════════════════════════════════════
 
-# Bellwether AI/semi stocks (must-have for cycle reading)
-SEMI_LEADERS = {
+# US Bellwether AI/semi stocks
+SEMI_LEADERS_US = {
     "NVDA":  "Nvidia",
     "AVGO":  "Broadcom",
     "TSM":   "TSMC ADR",
@@ -67,6 +67,19 @@ SEMI_LEADERS = {
     "LRCX":  "Lam Research",
     "INTC":  "Intel",
 }
+
+# Korean semi/AI stocks (KS = KOSPI, KQ = KOSDAQ)
+SEMI_LEADERS_KR = {
+    "005930.KS": "삼성전자 (Samsung Electronics)",
+    "000660.KS": "SK하이닉스 (SK Hynix)",
+    "042700.KS": "한미반도체 (Hanmi Semi)",
+    "058470.KQ": "리노공업 (Leeno Industrial)",
+    "240810.KQ": "원익IPS (Wonik IPS)",
+    "357780.KQ": "솔브레인 (Soulbrain)",  # photoresist/wet chemicals
+}
+
+# Combined universe for backwards compatibility with rest of code
+SEMI_LEADERS = {**SEMI_LEADERS_US, **SEMI_LEADERS_KR}
 
 # Hyperscalers (capex cycle drivers)
 HYPERSCALERS = {
@@ -86,6 +99,9 @@ INDICES = {
     "^NDX":  "Nasdaq 100",
     "^VIX":  "VIX",
     "DX-Y.NYB": "DXY (USD Index)",
+    "^KS11": "KOSPI",
+    "^KQ11": "KOSDAQ",
+    "KRW=X": "USD/KRW",
 }
 
 ALL_TICKERS = list(SEMI_LEADERS) + list(HYPERSCALERS) + list(INDICES)
@@ -364,34 +380,46 @@ RULES: list[ScoringRule] = [
     # ── Valuation (25%) — high P/E = late cycle ──
     ScoringRule("nvda_forward_pe",      "valuation", 25, 70, 1.5),
     ScoringRule("nvda_price_to_sales",  "valuation", 8,  35, 1.0),
-    ScoringRule("sox_avg_pe_pctl",      "valuation", 20, 90, 1.5),  # 5-yr percentile
+    ScoringRule("sox_avg_pe_pctl",      "valuation", 20, 90, 1.5),
     ScoringRule("top10_mcap_to_gdp_pct","valuation", 5, 18, 1.0),
+    # KR valuation indicators
+    ScoringRule("kr_semi_avg_pe",       "valuation", 5, 25, 1.0),    # KR usually cheap
+    ScoringRule("kr_us_pe_spread",      "valuation", 25, 0, 0.5),    # huge spread = KR oversold
 
-    # ── Earnings momentum (20%) — overheated growth = late cycle ──
-    ScoringRule("nvda_revenue_growth_pct", "earnings", -10, 100, 1.5),
+    # ── Earnings momentum (20%) ──
+    ScoringRule("nvda_revenue_growth_pct",     "earnings", -10, 100, 1.5),
     ScoringRule("semi_avg_revenue_growth_pct", "earnings", -15, 60, 1.0),
     ScoringRule("hyperscaler_capex_yoy_pct",   "earnings", -5, 50, 1.0),
+    # KR earnings momentum
+    ScoringRule("samsung_revenue_growth_pct",  "earnings", -20, 50, 0.8),
+    ScoringRule("skhynix_revenue_growth_pct",  "earnings", -30, 80, 1.0),  # HBM driver
 
-    # ── Capital cycle (15%) — heavy capex = top, light = bottom ──
-    ScoringRule("memory_capex_yoy_pct",   "capital", -30, 50, 1.0),
+    # ── Capital cycle (15%) ──
+    ScoringRule("memory_capex_yoy_pct",      "capital", -30, 50, 1.0),
     ScoringRule("semi_capex_to_revenue_pct", "capital", 8, 30, 1.0),
 
-    # ── Sentiment (15%) — low VIX + extended = euphoria ──
-    ScoringRule("vix",                  "sentiment", 35, 11, 1.5),  # inverted: low VIX = top
+    # ── Sentiment (15%) ──
+    ScoringRule("vix",                  "sentiment", 35, 11, 1.5),
     ScoringRule("sox_above_sma200_pct", "sentiment", -20, 35, 1.0),
-    ScoringRule("nvda_short_pct",       "sentiment", 5, 0.5, 1.0),  # low short = top
+    ScoringRule("nvda_short_pct",       "sentiment", 5, 0.5, 1.0),
+    # KR sentiment
+    ScoringRule("kospi_above_sma200_pct","sentiment", -15, 25, 0.8),
 
-    # ── Macro (10%) — easy money + low yields = supportive ──
-    ScoringRule("us_10y_yield",     "macro", 5.5, 2.5, 1.0),  # inverted
-    ScoringRule("dxy",              "macro", 110, 95, 0.8),    # inverted (strong $ = bad)
+    # ── Macro (10%) ──
+    ScoringRule("us_10y_yield",     "macro", 5.5, 2.5, 1.0),
+    ScoringRule("dxy",              "macro", 110, 95, 0.8),
     ScoringRule("ism_pmi",          "macro", 42, 58, 1.0),
     ScoringRule("m2_yoy_pct",       "macro", -3, 8, 0.8),
 
-    # ── Technical (15%) — momentum exhaustion ──
-    ScoringRule("sox_weekly_rsi",   "technical", 30, 80, 1.5),
-    ScoringRule("sox_daily_rsi",    "technical", 30, 75, 1.0),
-    ScoringRule("nvda_wk52_pos_pct","technical", 10, 95, 1.5),
-    ScoringRule("sox_dist_sma200_pct","technical", -25, 35, 1.0),
+    # ── Technical (15%) ──
+    ScoringRule("sox_weekly_rsi",      "technical", 30, 80, 1.5),
+    ScoringRule("sox_daily_rsi",       "technical", 30, 75, 1.0),
+    ScoringRule("nvda_wk52_pos_pct",   "technical", 10, 95, 1.5),
+    ScoringRule("sox_dist_sma200_pct", "technical", -25, 35, 1.0),
+    # KR technical
+    ScoringRule("kospi_weekly_rsi",     "technical", 30, 75, 0.8),
+    ScoringRule("samsung_wk52_pos_pct", "technical", 10, 95, 0.8),
+    ScoringRule("skhynix_wk52_pos_pct", "technical", 10, 95, 1.0),
 ]
 
 PHASE_RANGES = [
@@ -514,8 +542,9 @@ def send_telegram(message: str, token: str, chat_id: str) -> bool:
             return False
 
 
-def format_telegram_report(ascs: dict, leaders: dict, sox_tech: dict,
-                            indices: dict, raw: dict, pages_url: str = "") -> str:
+def format_telegram_report(ascs: dict, leaders: dict, kr_leaders: dict,
+                            sox_tech: dict, indices: dict, raw: dict,
+                            pages_url: str = "") -> str:
     now_kst = datetime.now(timezone.utc).astimezone(
         timezone(timedelta(hours=9))
     ).strftime("%Y-%m-%d %H:%M KST")
@@ -542,8 +571,13 @@ def format_telegram_report(ascs: dict, leaders: dict, sox_tech: dict,
     sox = indices.get("^SOX", {})
     nvda = leaders.get("NVDA", {})
     vix = indices.get("^VIX", {})
+    kospi = indices.get("^KS11", {})
+    samsung = kr_leaders.get("005930.KS", {})
+    skhynix = kr_leaders.get("000660.KS", {})
+    krw = indices.get("KRW=X", {})
+
     if sox or nvda:
-        lines.append("*🎯 Sector Pulse*")
+        lines.append("*🇺🇸 US Sector Pulse*")
         if sox.get("current"):
             chg = sox.get("chg_1d_pct", 0)
             arrow = "🟢" if chg >= 0 else "🔴"
@@ -554,6 +588,24 @@ def format_telegram_report(ascs: dict, leaders: dict, sox_tech: dict,
             lines.append(f"`NVDA    ` ${nvda['current']:>8,.2f}  {arrow} {chg:+.2f}%")
         if vix.get("current"):
             lines.append(f"`VIX     ` {vix['current']:>9,.2f}")
+        lines.append("")
+
+    if kospi or samsung or skhynix:
+        lines.append("*🇰🇷 KR Sector Pulse*")
+        if kospi.get("current"):
+            chg = kospi.get("chg_1d_pct", 0)
+            arrow = "🟢" if chg >= 0 else "🔴"
+            lines.append(f"`KOSPI   ` {kospi['current']:>9,.0f}  {arrow} {chg:+.2f}%")
+        if samsung.get("current"):
+            chg = samsung.get("chg_1d_pct", 0)
+            arrow = "🟢" if chg >= 0 else "🔴"
+            lines.append(f"`삼성전자 ` ₩{samsung['current']:>8,.0f}  {arrow} {chg:+.2f}%")
+        if skhynix.get("current"):
+            chg = skhynix.get("chg_1d_pct", 0)
+            arrow = "🟢" if chg >= 0 else "🔴"
+            lines.append(f"`SK하이닉스` ₩{skhynix['current']:>7,.0f}  {arrow} {chg:+.2f}%")
+        if krw.get("current"):
+            lines.append(f"`USD/KRW ` {krw['current']:>9,.0f}")
         lines.append("")
 
     # Dimensions
@@ -638,17 +690,30 @@ def main() -> int:
         "pages_url":        env("PAGES_URL"),
     }
 
-    # ── Phase 1: Stock data ──
-    print("\n📥 Phase 1: Fetching stock prices & fundamentals...")
+    # ── Phase 1: Stock data — US ──
+    print("\n📥 Phase 1: Fetching US semi leaders...")
 
     leaders_data = {}
-    for symbol, name in SEMI_LEADERS.items():
+    for symbol, name in SEMI_LEADERS_US.items():
         df = fetch_price_history(symbol, period="2y")
         info = fetch_ticker_info(symbol)
         tech = compute_technicals(df) if df is not None else {}
-        leaders_data[symbol] = {"name": name, **info, **tech}
+        leaders_data[symbol] = {"name": name, "region": "US", **info, **tech}
         print(f"  · {symbol:<6} ({name:<22}) ${tech.get('current', 0):>9,.2f}  "
               f"P/E={info.get('forwardPE') or info.get('trailingPE') or 'n/a'}")
+
+    # ── Phase 1b: Stock data — Korea ──
+    print("\n📥 Phase 1b: Fetching Korean semi leaders (KOSPI/KOSDAQ)...")
+    kr_leaders_data = {}
+    for symbol, name in SEMI_LEADERS_KR.items():
+        df = fetch_price_history(symbol, period="2y")
+        info = fetch_ticker_info(symbol)
+        tech = compute_technicals(df) if df is not None else {}
+        kr_leaders_data[symbol] = {"name": name, "region": "KR", **info, **tech}
+        price_str = f"₩{tech.get('current', 0):>10,.0f}"
+        pe = info.get('forwardPE') or info.get('trailingPE')
+        pe_str = f"{pe:.1f}" if pe else "n/a"
+        print(f"  · {symbol:<14} ({name[:22]:<22}) {price_str}  P/E={pe_str}")
 
     print("\n📥 Phase 2: Fetching hyperscaler capex...")
     hyperscalers_data = {}
@@ -771,6 +836,37 @@ def main() -> int:
     if semi_capex_ratios:
         raw["semi_capex_to_revenue_pct"] = float(np.mean(semi_capex_ratios))
 
+    # ── Korean market metrics ──
+    # Average KR semi P/E (Samsung + SK Hynix dominate)
+    kr_pes = [d["forwardPE"] for d in kr_leaders_data.values() if d.get("forwardPE")]
+    if kr_pes:
+        raw["kr_semi_avg_pe"] = float(np.mean(kr_pes))
+
+    # KR vs US semi PE spread (KR is usually cheaper; large discount = KR opportunity)
+    if kr_pes and pes:
+        raw["kr_us_pe_spread"] = float(np.mean(pes)) - float(np.mean(kr_pes))
+
+    # KOSPI technicals
+    kospi = indices_data.get("^KS11", {})
+    if kospi.get("dist_from_sma200_pct") is not None:
+        raw["kospi_above_sma200_pct"] = kospi["dist_from_sma200_pct"]
+    if kospi.get("weekly_rsi") is not None:
+        raw["kospi_weekly_rsi"] = kospi["weekly_rsi"]
+
+    # Samsung 52-week position (single most important KR proxy)
+    samsung = kr_leaders_data.get("005930.KS", {})
+    if samsung.get("wk52_position_pct") is not None:
+        raw["samsung_wk52_pos_pct"] = samsung["wk52_position_pct"]
+    if samsung.get("revenueGrowth") is not None:
+        raw["samsung_revenue_growth_pct"] = float(samsung["revenueGrowth"]) * 100
+
+    # SK Hynix (HBM leader — pure-play AI memory)
+    skhynix = kr_leaders_data.get("000660.KS", {})
+    if skhynix.get("wk52_position_pct") is not None:
+        raw["skhynix_wk52_pos_pct"] = skhynix["wk52_position_pct"]
+    if skhynix.get("revenueGrowth") is not None:
+        raw["skhynix_revenue_growth_pct"] = float(skhynix["revenueGrowth"]) * 100
+
     # VIX
     vix = indices_data.get("^VIX", {})
     if vix.get("current"):
@@ -825,15 +921,36 @@ def main() -> int:
                 "close": float(row["Close"]),
             })
 
+    samsung_df = fetch_price_history("005930.KS", period="6mo")
+    samsung_90d = []
+    if samsung_df is not None:
+        for ts, row in samsung_df.tail(90).iterrows():
+            samsung_90d.append({
+                "ts": ts.isoformat(),
+                "close": float(row["Close"]),
+            })
+
+    skhynix_df = fetch_price_history("000660.KS", period="6mo")
+    skhynix_90d = []
+    if skhynix_df is not None:
+        for ts, row in skhynix_df.tail(90).iterrows():
+            skhynix_90d.append({
+                "ts": ts.isoformat(),
+                "close": float(row["Close"]),
+            })
+
     latest_payload = {
-        "generated_at": now_iso,
-        "ascs":         ascs,
-        "leaders":      leaders_data,
-        "hyperscalers": hyperscalers_data,
-        "indices":      indices_data,
-        "macro":        macro,
-        "sox_90d":      sox_90d,
-        "nvda_90d":     nvda_90d,
+        "generated_at":    now_iso,
+        "ascs":            ascs,
+        "leaders":         leaders_data,
+        "kr_leaders":      kr_leaders_data,
+        "hyperscalers":    hyperscalers_data,
+        "indices":         indices_data,
+        "macro":           macro,
+        "sox_90d":         sox_90d,
+        "nvda_90d":        nvda_90d,
+        "samsung_90d":     samsung_90d,
+        "skhynix_90d":     skhynix_90d,
     }
     save_json(LATEST_FILE, latest_payload)
 
@@ -846,8 +963,8 @@ def main() -> int:
 
     # ── Phase 8: Telegram ──
     print("\n📨 Phase 8: Sending Telegram report...")
-    report = format_telegram_report(ascs, leaders_data, sox, indices_data,
-                                     raw, cfg["pages_url"])
+    report = format_telegram_report(ascs, leaders_data, kr_leaders_data,
+                                     sox, indices_data, raw, cfg["pages_url"])
     sent = send_telegram(report, cfg["telegram_token"], cfg["telegram_chat_id"])
 
     print("\n" + "=" * 64)

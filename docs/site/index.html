@@ -186,7 +186,8 @@ function DimensionCard({ name, score, indicators = [] }) {
   );
 }
 
-function StockTable({ leaders }) {
+function StockTable({ leaders, currency = "USD" }) {
+  const symbol = currency === "KRW" ? "₩" : "$";
   const rows = Object.entries(leaders || {}).map(([sym, d]) => ({
     sym, name: d.name,
     price: d.current, chg: d.chg_1d_pct,
@@ -195,6 +196,17 @@ function StockTable({ leaders }) {
     rsi: d.daily_rsi,
     mcap: d.marketCap,
   })).sort((a, b) => (b.mcap || 0) - (a.mcap || 0));
+
+  const formatPrice = (p) => {
+    if (!p) return '—';
+    if (currency === "KRW") return `${symbol}${p.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+    return `${symbol}${p.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  };
+  const formatMcap = (m) => {
+    if (!m) return '—';
+    if (currency === "KRW") return `₩${(m/1e12).toFixed(1)}T`;
+    return `$${(m/1e9).toFixed(0)}B`;
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -217,7 +229,7 @@ function StockTable({ leaders }) {
               <td className="py-2 px-2 text-xs" style={{ color: COLORS.textDim }}>{r.name}</td>
               <td className="py-2 px-2 text-right font-mono tabular-nums"
                 style={{ color: COLORS.text }}>
-                ${r.price ? r.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—'}
+                {formatPrice(r.price)}
               </td>
               <td className="py-2 px-2 text-right font-mono tabular-nums"
                 style={{ color: r.chg >= 0 ? COLORS.green : COLORS.red }}>
@@ -245,7 +257,7 @@ function StockTable({ leaders }) {
               </td>
               <td className="py-2 px-2 text-right font-mono tabular-nums text-xs"
                 style={{ color: COLORS.textDim }}>
-                {r.mcap ? `$${(r.mcap/1e9).toFixed(0)}B` : '—'}
+                {formatMcap(r.mcap)}
               </td>
             </tr>
           ))}
@@ -440,10 +452,16 @@ function Dashboard() {
   const ascs = latest.ascs;
   const indices = latest.indices || {};
   const leaders = latest.leaders || {};
+  const krLeaders = latest.kr_leaders || {};
   const hyperscalers = latest.hyperscalers || {};
   const sox = indices['^SOX'] || {};
   const nvda = leaders['NVDA'] || {};
   const vix = indices['^VIX'] || {};
+  const kospi = indices['^KS11'] || {};
+  const kosdaq = indices['^KQ11'] || {};
+  const samsung = krLeaders['005930.KS'] || {};
+  const skhynix = krLeaders['000660.KS'] || {};
+  const krw = indices['KRW=X'] || {};
   const generated = new Date(latest.generated_at);
 
   const byDim = {};
@@ -545,10 +563,73 @@ function Dashboard() {
           ))}
         </div>
 
-        {/* Stocks Table */}
-        <Card title="Semiconductor Leaders" icon="🏆"
+        {/* Stocks Table - US */}
+        <Card title="🇺🇸 US Semiconductor Leaders" icon="🏆"
           subtitle={`${Object.keys(leaders).length} tickers`} className="mb-6">
-          <StockTable leaders={leaders} />
+          <StockTable leaders={leaders} currency="USD" />
+        </Card>
+
+        {/* Korean Sector Pulse + Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+          <Card title="🇰🇷 Samsung · 90 Day" icon="📈"
+            subtitle={samsung.current ? `₩${samsung.current.toLocaleString()}` : ''}>
+            <div className="flex items-baseline gap-4 mb-2">
+              <div>
+                <div className="text-3xl font-bold font-mono tabular-nums">
+                  ₩{samsung.current ? samsung.current.toLocaleString() : '—'}
+                </div>
+                {samsung.chg_1d_pct != null && (
+                  <div className="text-sm font-mono"
+                    style={{ color: samsung.chg_1d_pct >= 0 ? COLORS.green : COLORS.red }}>
+                    {samsung.chg_1d_pct >= 0 ? '▲' : '▼'} {samsung.chg_1d_pct.toFixed(2)}% (1D)
+                  </div>
+                )}
+              </div>
+              <div className="text-xs font-mono" style={{ color: COLORS.textDim }}>
+                {(samsung.forwardPE || samsung.trailingPE) && <div>P/E: <span style={{color: COLORS.text}}>{(samsung.forwardPE || samsung.trailingPE).toFixed(1)}</span></div>}
+                {samsung.wk52_position_pct != null && (
+                  <div>52w pos: <span style={{color: samsung.wk52_position_pct > 80 ? COLORS.lateBull : COLORS.text}}>
+                    {samsung.wk52_position_pct.toFixed(0)}%</span>
+                  </div>
+                )}
+                {kospi.current && <div>KOSPI: <span style={{color: COLORS.text}}>{kospi.current.toFixed(0)}</span></div>}
+              </div>
+            </div>
+            <PriceChart data={latest.samsung_90d} label="Samsung" color={COLORS.expansion} />
+          </Card>
+
+          <Card title="🇰🇷 SK Hynix · 90 Day" icon="🔥"
+            subtitle={skhynix.current ? `₩${skhynix.current.toLocaleString()}` : ''}>
+            <div className="flex items-baseline gap-4 mb-2">
+              <div>
+                <div className="text-3xl font-bold font-mono tabular-nums">
+                  ₩{skhynix.current ? skhynix.current.toLocaleString() : '—'}
+                </div>
+                {skhynix.chg_1d_pct != null && (
+                  <div className="text-sm font-mono"
+                    style={{ color: skhynix.chg_1d_pct >= 0 ? COLORS.green : COLORS.red }}>
+                    {skhynix.chg_1d_pct >= 0 ? '▲' : '▼'} {skhynix.chg_1d_pct.toFixed(2)}% (1D)
+                  </div>
+                )}
+              </div>
+              <div className="text-xs font-mono" style={{ color: COLORS.textDim }}>
+                {(skhynix.forwardPE || skhynix.trailingPE) && <div>P/E: <span style={{color: COLORS.text}}>{(skhynix.forwardPE || skhynix.trailingPE).toFixed(1)}</span></div>}
+                {skhynix.wk52_position_pct != null && (
+                  <div>52w pos: <span style={{color: skhynix.wk52_position_pct > 80 ? COLORS.lateBull : COLORS.text}}>
+                    {skhynix.wk52_position_pct.toFixed(0)}%</span>
+                  </div>
+                )}
+                {krw.current && <div>USD/KRW: <span style={{color: COLORS.text}}>{krw.current.toFixed(0)}</span></div>}
+              </div>
+            </div>
+            <PriceChart data={latest.skhynix_90d} label="SK Hynix" color={COLORS.lateBull} />
+          </Card>
+        </div>
+
+        {/* Stocks Table - KR */}
+        <Card title="🇰🇷 Korean Semiconductor Leaders" icon="🏆"
+          subtitle={`${Object.keys(krLeaders).length} tickers · KOSPI/KOSDAQ`} className="mb-6">
+          <StockTable leaders={krLeaders} currency="KRW" />
         </Card>
 
         {/* Hyperscaler Capex + ASCS Timeline */}
