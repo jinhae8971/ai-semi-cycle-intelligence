@@ -43,7 +43,7 @@
     "vix": 18.920000076293945
   },
   {
-    "ts": "2026-04-23T21:57:17.817884+00:00",
+    "ts": "2026-04-23T22:56:36.456679+00:00",
     "ascs": 76.04,
     "phase": "Late Bull",
     "dimensions": {
@@ -58,7 +58,7 @@
       "nvda_forward_pe": 17.762863,
       "nvda_price_to_sales": 22.470572,
       "nvda_revenue_growth_pct": 73.2,
-      "nvda_wk52_pos_pct": 92.92900478137555,
+      "nvda_wk52_pos_pct": 92.92900426429847,
       "nvda_short_pct": 1.21,
       "sox_above_sma200_pct": 42.63565781336045,
       "sox_dist_sma200_pct": 42.63565781336045,
