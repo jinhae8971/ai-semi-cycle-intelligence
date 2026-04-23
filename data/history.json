@@ -43,46 +43,46 @@
     "vix": 18.920000076293945
   },
   {
-    "ts": "2026-04-23T18:40:55.740768+00:00",
-    "ascs": 76.02,
+    "ts": "2026-04-23T21:57:17.817884+00:00",
+    "ascs": 76.04,
     "phase": "Late Bull",
     "dimensions": {
-      "valuation": 55.71,
+      "valuation": 55.72,
       "earnings": 80.15,
       "capital": 73.57,
-      "sentiment": 84.27,
+      "sentiment": 84.25,
       "macro": null,
-      "technical": 98.59
+      "technical": 98.66
     },
     "indicators_raw": {
-      "nvda_forward_pe": 17.743288,
-      "nvda_price_to_sales": 22.445808,
+      "nvda_forward_pe": 17.762863,
+      "nvda_price_to_sales": 22.470572,
       "nvda_revenue_growth_pct": 73.2,
-      "nvda_wk52_pos_pct": 92.71813670179321,
+      "nvda_wk52_pos_pct": 92.92900478137555,
       "nvda_short_pct": 1.21,
-      "sox_above_sma200_pct": 42.45131333962328,
-      "sox_dist_sma200_pct": 42.45131333962328,
-      "sox_weekly_rsi": 79.11163005955382,
-      "sox_daily_rsi": 81.86896511336619,
-      "sox_avg_forward_pe": 28.53306175,
-      "sox_avg_pe_pctl": 50.10018712121212,
-      "top10_mcap_to_gdp_pct": 38.73868010837333,
+      "sox_above_sma200_pct": 42.63565781336045,
+      "sox_dist_sma200_pct": 42.63565781336045,
+      "sox_weekly_rsi": 79.17539295821672,
+      "sox_daily_rsi": 81.97571929645353,
+      "sox_avg_forward_pe": 28.531830230000004,
+      "sox_avg_pe_pctl": 50.096455242424256,
+      "top10_mcap_to_gdp_pct": 38.77269411157334,
       "semi_avg_revenue_growth_pct": 40.45,
       "hyperscaler_capex_yoy_pct": 94.81365068614464,
       "memory_capex_yoy_pct": 89.08895778678749,
       "semi_capex_to_revenue_pct": 18.369666085677853,
       "kr_semi_avg_pe": 25.591511333333333,
-      "kr_us_pe_spread": 2.9415504166666686,
+      "kr_us_pe_spread": 2.940318896666671,
       "kospi_above_sma200_pct": 50.366846832319865,
       "kospi_weekly_rsi": 72.73849316967753,
       "samsung_wk52_pos_pct": 100.0,
       "samsung_revenue_growth_pct": 23.799999999999997,
       "skhynix_wk52_pos_pct": 100.0,
       "skhynix_revenue_growth_pct": 66.10000000000001,
-      "vix": 19.299999237060547
+      "vix": 19.309999465942383
     },
-    "nvda_price": 199.4199981689453,
-    "sox": 10065.453125,
-    "vix": 19.299999237060547
+    "nvda_price": 199.63999938964844,
+    "sox": 10078.572265625,
+    "vix": 19.309999465942383
   }
 ]
