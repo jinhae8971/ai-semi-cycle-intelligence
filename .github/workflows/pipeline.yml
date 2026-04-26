@@ -2,16 +2,12 @@ name: pipeline
 
 # AI Semiconductor Cycle Intelligence pipeline.
 # Schedule:
-#   - Every 4 hours during US market hours (NYSE 14:30-21:00 UTC)
-#   - 22:00 UTC daily (07:00 KST) — main daily report after US close
+#   - 22:00 UTC daily (07:00 KST)
 #
-# Stocks update during market hours, so frequent runs catch real-time changes.
+# Sends one daily report after US close.
 
 on:
   schedule:
-    - cron: "30 14 * * 1-5"   # US market open (09:30 ET / 14:30 UTC)
-    - cron: "30 17 * * 1-5"   # US market mid-day
-    - cron: "5 21 * * 1-5"    # US market close (16:00 ET / 21:00 UTC)
     - cron: "0 22 * * *"      # daily 07:00 KST report (after US close)
   workflow_dispatch:
 
