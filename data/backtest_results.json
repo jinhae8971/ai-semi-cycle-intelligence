@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-04-27T21:52:47.117322+00:00",
+  "generated_at": "2026-04-28T21:56:16.879268+00:00",
   "backtest_window": {
     "start": "2017-01-03",
-    "end": "2026-04-27",
-    "n_days": 2340
+    "end": "2026-04-28",
+    "n_days": 2341
   },
   "indicators_used": [
     "vix",
@@ -147,38 +147,38 @@
         "1m": 3.6,
         "3m": 9.8,
         "6m": 33.4,
-        "12m": 53.6
+        "12m": 48.1
       },
       "signal_correct": false
     },
     {
       "name": "Today (Live)",
-      "target_date": "2026-04-27",
-      "actual_date": "2026-04-27",
+      "target_date": "2026-04-28",
+      "actual_date": "2026-04-28",
       "expected_phase": "Late Bull",
       "expected_score": "70-80",
-      "actual_score": 92.4,
+      "actual_score": 92.3,
       "actual_phase": "Euphoria",
       "match": "\u274c",
       "context": "Current pipeline live result for comparison.",
-      "sox_price": 10408.0,
+      "sox_price": 10036.0,
       "forward_returns": {},
       "signal_correct": null
     }
   ],
   "ascs_stats": {
     "min": 4.2414492463113875,
-    "max": 99.09363146223305,
-    "mean": 61.03438951251944,
-    "median": 63.28637135216026,
-    "std": 21.725213503899457
+    "max": 99.09365034223504,
+    "mean": 61.04774398026612,
+    "median": 63.28705360997686,
+    "std": 21.730180447955593
   },
   "phase_distribution_pct": {
-    "Capitulation": 5.47008547008547,
-    "Recovery": 11.880341880341879,
-    "Expansion": 26.410256410256412,
-    "Late Bull": 32.863247863247864,
-    "Euphoria": 23.376068376068375
+    "Capitulation": 5.467748825288338,
+    "Recovery": 11.87526697992311,
+    "Expansion": 26.39897479709526,
+    "Late Bull": 32.84920973942759,
+    "Euphoria": 23.408799658265696
   },
   "timeseries_weekly": [
     {
@@ -2613,8 +2613,8 @@
     },
     {
       "ts": "2026-05-03",
-      "ascs": 92.4,
-      "sox": 10408.0
+      "ascs": 92.3,
+      "sox": 10036.0
     }
   ]
 }
