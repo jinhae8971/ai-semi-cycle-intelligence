@@ -385,5 +385,48 @@
     "nvda_price": 199.57000732421875,
     "sox": 10503.701171875,
     "vix": 16.889999389648438
+  },
+  {
+    "ts": "2026-05-01T21:52:10.697925+00:00",
+    "ascs": 77.17,
+    "phase": "Late Bull",
+    "dimensions": {
+      "valuation": 56.76,
+      "earnings": 82.97,
+      "capital": 73.36,
+      "sentiment": 87.57,
+      "macro": null,
+      "technical": 96.89
+    },
+    "indicators_raw": {
+      "nvda_forward_pe": 17.656982,
+      "nvda_price_to_sales": 22.33663,
+      "nvda_revenue_growth_pct": 73.2,
+      "nvda_wk52_pos_pct": 82.70908913528811,
+      "nvda_short_pct": 1.2200001,
+      "sox_above_sma200_pct": 47.01594309392232,
+      "sox_dist_sma200_pct": 47.01594309392232,
+      "sox_weekly_rsi": 81.43499271896077,
+      "sox_daily_rsi": 75.75871497783416,
+      "sox_avg_forward_pe": 29.254067900000003,
+      "sox_avg_pe_pctl": 52.285054242424245,
+      "top10_mcap_to_gdp_pct": 39.956839519573336,
+      "semi_avg_revenue_growth_pct": 42.17999999999999,
+      "hyperscaler_capex_yoy_pct": 94.81365068614464,
+      "memory_capex_yoy_pct": 89.08895778678749,
+      "semi_capex_to_revenue_pct": 18.278036647612435,
+      "kr_semi_avg_pe": 27.567872633333334,
+      "kr_us_pe_spread": 1.6861952666666689,
+      "kospi_above_sma200_pct": 50.88871306884704,
+      "kospi_weekly_rsi": 73.90711407733323,
+      "samsung_wk52_pos_pct": 96.82143731037972,
+      "samsung_revenue_growth_pct": 23.799999999999997,
+      "skhynix_wk52_pos_pct": 98.75799141040167,
+      "skhynix_revenue_growth_pct": 198.10000000000002,
+      "vix": 16.989999771118164
+    },
+    "nvda_price": 198.4499969482422,
+    "sox": 10595.3408203125,
+    "vix": 16.989999771118164
   }
 ]
